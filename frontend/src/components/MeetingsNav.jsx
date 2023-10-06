@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import styles from "../styles/MeetingsNav.module.css";
 
 export default function MeetingsNav() {
   const [meetings, setMeetings] = useState([]);
@@ -15,7 +16,7 @@ export default function MeetingsNav() {
   }, []);
   return (
     <>
-      <div id="sidebar">
+      <div className={styles.sidebar}>
         <h1>Meetings</h1>
         <div>
           <form id="search-form" role="search">
@@ -38,7 +39,10 @@ export default function MeetingsNav() {
             {meetings.map((meeting) => {
               return (
                 <li key={meeting.id}>
-                  <Link to={`/meetings/${meeting.id}`}>{meeting.title}</Link>
+                  <Link to={`/meetings/${meeting.id}`}>
+                    <h2>{meeting.title}</h2>
+                    <p>{meeting.description}</p>
+                  </Link>
                 </li>
               );
             })}

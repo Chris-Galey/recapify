@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import MeetingView, MeetingDetailView, MeetingSummaryView, MeetingSummaryDetailView, MeetingTranscriptView, MeetingTranscriptDetailView
+from .views import MeetingView, MeetingDetailView, MeetingSummaryView, MeetingSummaryDetailView, MeetingTranscriptView
 
 urlpatterns = [
     path('', MeetingView.as_view(), name='meeting-list'),
@@ -12,5 +12,5 @@ urlpatterns = [
     
     path('<int:meeting_id>/transcript/', MeetingTranscriptView.as_view(), name='meeting-transcript'),
     
-    path('<int:meeting_id>/transcript/<int:transcript_id>/', MeetingTranscriptDetailView.as_view(), name='meeting-transcript-detail'),
+    # path('<int:meeting_id>/transcript/<int:transcript_id>/', MeetingTranscriptDetailView.as_view(), name='meeting-transcript-detail'),
 ]

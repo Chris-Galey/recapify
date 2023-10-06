@@ -4,6 +4,10 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Root from "./routes/Root";
 import Home from "./routes/Home";
 import Meetings from "./routes/Meetings";
+import MeetingDetail from "./routes/MeetingDetail";
+import Transcript from "./routes/Transcript";
+import Summaries from "./routes/Summaries";
+import SummaryDetail from "./routes/SummaryDetail";
 import ErrorPage from "./errors/error-page";
 import "./styles/index.css";
 
@@ -15,15 +19,29 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <Home /> },
       {
-        path: "/meetings",
+        path: "meetings",
         element: <Meetings />,
+        children: [
+          {
+            path: ":meetingId",
+            element: <MeetingDetail />,
+            children: [
+              {
+                path: "summaries",
+                element: <Summaries />,
+                children: [{ path: ":summaryId", element: <SummaryDetail /> }],
+              },
+              { path: "transcript", element: <Transcript /> },
+            ],
+          },
+        ],
       },
       {
-        path: "/login",
+        path: "login",
         element: <h1>Login</h1>,
       },
       {
-        path: "/signup",
+        path: "signup",
         element: <h1>Signup</h1>,
       },
     ],

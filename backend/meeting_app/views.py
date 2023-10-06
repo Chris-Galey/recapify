@@ -1,4 +1,4 @@
-from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, RetrieveDestroyAPIView
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, RetrieveDestroyAPIView, DestroyAPIView
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework import status
@@ -100,10 +100,15 @@ class MeetingSummaryDetailView(RetrieveUpdateDestroyAPIView):
         summary.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
     
-class MeetingTranscriptView(ListCreateAPIView):
+class MeetingTranscriptView(ListCreateAPIView, DestroyAPIView):
     queryset = MeetingTranscript.objects.all()
     serializer_class = MeetingTranscriptSerializer
     permission_classes = [AllowAny]
+
+    def delete(self, request, meeting_id=None):
+        transcripts = MeetingTranscript.objects.filter(meeting=meeting_id)
+        transcripts.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
     
     def list(self, request, meeting_id=None):
         transcript = MeetingTranscript.objects.get(meeting=meeting_id)
@@ -123,21 +128,22 @@ class MeetingTranscriptView(ListCreateAPIView):
             return Response(serializer.data)
         else: 
             return Response(serializer.errors)
+
     
-class MeetingTranscriptDetailView(RetrieveDestroyAPIView):
-    queryset = MeetingTranscript.objects.all()
-    serializer_class = MeetingTranscriptSerializer
-    permission_classes = [AllowAny]
+# class MeetingTranscriptDetailView(RetrieveDestroyAPIView):
+#     queryset = MeetingTranscript.objects.all()
+#     serializer_class = MeetingTranscriptSerializer
+#     permission_classes = [AllowAny]
     
-    def retrieve(self, request, meeting_id=None, transcript_id=None):
-        transcript = MeetingTranscript.objects.get(meeting=meeting_id, id=transcript_id)
-        serializer = MeetingTranscriptSerializer(transcript)
-        return Response(serializer.data)
+#     def retrieve(self, request, meeting_id=None, transcript_id=None):
+#         transcript = MeetingTranscript.objects.get(meeting=meeting_id, id=transcript_id)
+#         serializer = MeetingTranscriptSerializer(transcript)
+#         return Response(serializer.data)
        
         
-    def destroy(self, request, meeting_id=None, transcript_id=None):
-        transcript = MeetingTranscript.objects.get(meeting=meeting_id, id=transcript_id)
-        transcript.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+#     def destroy(self, request, meeting_id=None, transcript_id=None):
+#         transcript = MeetingTranscript.objects.get(meeting=meeting_id, id=transcript_id)
+#         transcript.delete()
+#         return Response(status=status.HTTP_204_NO_CONTENT)
         
         

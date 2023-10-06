@@ -1,11 +1,12 @@
 import { Link } from "react-router-dom";
+import styles from "../styles/RootHeader.module.css";
 export default function RootHeader() {
   return (
-    <header className="header">
+    <header className={styles.root_header}>
       <h1>Recapify</h1>
 
-      <nav>
-        <ul>
+      <nav className={styles.root_nav}>
+        <ul className={styles.root_list}>
           <li>
             <Link to="/">Home</Link>
           </li>
