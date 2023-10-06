@@ -18,7 +18,11 @@ export default function SummaryDetail() {
 
   return (
     <div>
-      <h2>{summary.content}</h2>
+      <p>{summary.content}</p>
+      <button>Edit</button>
+      <button>Save</button>
+      <button>AI Summary</button>
+      <button>Delete</button>
     </div>
   );
 }

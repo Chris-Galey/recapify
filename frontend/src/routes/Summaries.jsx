@@ -18,6 +18,7 @@ export default function Summaries() {
 
   return (
     <div>
+      <button>New Summary</button>
       <ul>
         {summaries.map((summary) => (
           <li key={summary.id}>

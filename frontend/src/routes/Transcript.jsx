@@ -20,6 +20,12 @@ export default function Transcript() {
     <div>
       <h1>Transcript</h1>
       <p>{transcript.raw_transcript}</p>
+      <div>
+        <button>Start</button>
+        <button>Stop</button>
+        <button>Reset</button>
+        <button>Process</button>
+      </div>
     </div>
   );
 }
