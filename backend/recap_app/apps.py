@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class MeetingAppConfig(AppConfig):
+class recapAppConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'meeting_app'
+    name = 'recap_app'
