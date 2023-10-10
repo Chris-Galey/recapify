@@ -17,12 +17,13 @@ export default function RecapDetail() {
   }, [recapId]);
 
   return (
-    <div className={styles.main}>
+    <div className={styles.recap__main}>
       <h2>{recap.title}</h2>
-      <p>{recap.description}</p>
-      <p>{recap.created_at}</p>
-      <Link to="transcript"> View Transcript</Link>
-      <Link to="summaries"> View Summary</Link>
+      <div>Input</div>
+      <div>
+        <Link to="transcript"> Transcript</Link>
+        <Link to="summaries"> Summary</Link>
+      </div>
       <div className={styles.content}>
         <Outlet />
       </div>

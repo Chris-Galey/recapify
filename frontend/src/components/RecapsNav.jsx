@@ -6,6 +6,7 @@ import styles from "../styles/RecapsNav.module.css";
 export default function RecapsNav() {
   const [recaps, setRecaps] = useState([]);
   const [title, setTitle] = useState();
+  const [description, setDescription] = useState();
   console.log(title);
   console.log(recaps);
 
@@ -24,11 +25,13 @@ export default function RecapsNav() {
     const data = await fetch("http://127.0.0.1:8000/recaps/", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ title }),
+      body: JSON.stringify({ title, description }),
     });
     const res = await data.json();
+    setRecaps([...recaps, res]);
     console.log(res);
     setTitle("");
+    setDescription("");
   };
 
   return (
@@ -47,14 +50,29 @@ export default function RecapsNav() {
             <div className="sr-only" aria-live="polite"></div>
           </form> */}
           <form method="post" onSubmit={handleNewRecap}>
-            <input
-              type="text"
-              onChange={(e) => {
-                setTitle(e.target.value);
-              }}
-              value={title}
-            />
-            <button type="submit">New</button>
+            <label htmlFor="title">
+              Title:
+              <input
+                id="title"
+                type="text"
+                onChange={(e) => {
+                  setTitle(e.target.value);
+                }}
+                value={title}
+              />
+            </label>
+            <label htmlFor="description">
+              Description:
+              <input
+                id="description"
+                type="text"
+                onChange={(e) => {
+                  setDescription(e.target.value);
+                }}
+                value={description}
+              />
+            </label>
+            <button type="submit">Add</button>
           </form>
         </div>
         <nav>

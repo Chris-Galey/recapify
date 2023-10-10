@@ -19,9 +19,8 @@ export default function SummaryDetail() {
   return (
     <div>
       <p>{summary.content}</p>
-      <button>Edit</button>
+      <button>Recapify</button>
       <button>Save</button>
-      <button>AI Summary</button>
       <button>Delete</button>
     </div>
   );
