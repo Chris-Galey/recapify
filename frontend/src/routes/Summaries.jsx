@@ -2,19 +2,19 @@ import { useEffect, useState } from "react";
 import { useParams, Link, Outlet } from "react-router-dom";
 
 export default function Summaries() {
-  const { meetingId } = useParams();
+  const { recapId } = useParams();
   const [summaries, setSummaries] = useState([]);
   console.log(summaries);
   useEffect(() => {
     const handleSummaries = async () => {
       const data = await fetch(
-        `http://127.0.0.1:8000/meetings/${meetingId}/summaries/`
+        `http://127.0.0.1:8000/recaps/${recapId}/summaries/`
       );
       const res = await data.json();
       setSummaries(res);
     };
     handleSummaries();
-  }, [meetingId]);
+  }, [recapId]);
 
   return (
     <div>

@@ -2,19 +2,19 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
 export default function Transcript() {
-  const { meetingId } = useParams();
-  const [transcript, setTranscript] = useState({});
+  const { recapId } = useParams();
+  const [transcript, setTranscript] = useState([]);
   console.log(transcript);
   useEffect(() => {
     const handleTranscript = async () => {
       const data = await fetch(
-        `http://127.0.0.1:8000/meetings/${meetingId}/transcript/`
+        `http://127.0.0.1:8000/recaps/${recapId}/transcript/`
       );
       const res = await data.json();
       setTranscript(res);
     };
     handleTranscript();
-  }, [meetingId]);
+  }, [recapId]);
 
   return (
     <div>

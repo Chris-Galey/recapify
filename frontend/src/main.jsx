@@ -3,8 +3,8 @@ import * as ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Root from "./routes/Root";
 import Home from "./routes/Home";
-import Meetings from "./routes/Meetings";
-import MeetingDetail from "./routes/MeetingDetail";
+import Recaps from "./routes/Recaps";
+import RecapDetail from "./routes/RecapDetail";
 import Transcript from "./routes/Transcript";
 import Summaries from "./routes/Summaries";
 import SummaryDetail from "./routes/SummaryDetail";
@@ -19,12 +19,12 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <Home /> },
       {
-        path: "meetings",
-        element: <Meetings />,
+        path: "recaps",
+        element: <Recaps />,
         children: [
           {
-            path: ":meetingId",
-            element: <MeetingDetail />,
+            path: ":recapId",
+            element: <RecapDetail />,
             children: [
               {
                 path: "summaries",

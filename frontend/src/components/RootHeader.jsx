@@ -11,7 +11,7 @@ export default function RootHeader() {
             <Link to="/">Home</Link>
           </li>
           <li>
-            <Link to="/meetings">Meetings</Link>
+            <Link to="/recaps">Recaps</Link>
           </li>
           <li>
             <Link to="/login">Login</Link>
