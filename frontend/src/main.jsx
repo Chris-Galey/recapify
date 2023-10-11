@@ -5,9 +5,6 @@ import Root from "./routes/Root";
 import Home from "./routes/Home";
 import Recaps from "./routes/Recaps";
 import RecapDetail from "./routes/RecapDetail";
-import Transcript from "./routes/Transcript";
-import Summaries from "./routes/Summaries";
-import SummaryDetail from "./routes/SummaryDetail";
 import ErrorPage from "./errors/error-page";
 import "./styles/index.css";
 
@@ -25,14 +22,13 @@ const router = createBrowserRouter([
           {
             path: ":recapId",
             element: <RecapDetail />,
-            children: [
-              {
-                path: "summaries",
-                element: <Summaries />,
-                children: [{ path: ":summaryId", element: <SummaryDetail /> }],
-              },
-              { path: "transcript", element: <Transcript /> },
-            ],
+            // children: [
+            //   {
+            //     path: "summaries",
+            //     element: <Summaries />,
+            //   },
+            //   { path: "transcript", element: <Transcript /> },
+            // ],
           },
         ],
       },

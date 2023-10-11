@@ -61,43 +61,25 @@ class RecapSummaryView(ListCreateAPIView):
     permission_classes = [AllowAny]
     
 
-    def list(self, request, recap_id=None, summary_id=None):
+    def list(self, request, recap_id=None):
         queryset = self.get_queryset().filter(recap=recap_id)
         serializer = RecapSummarySerializer(queryset, many=True)
         return Response(serializer.data)
 
-    def create(self, request, recap_id=None, summary_id=None):
+    def create(self, request, recap_id=None):
+        exisiting_transcript = self.get_queryset().filter(recap=recap_id).first()
+        if exisiting_transcript:
+            return Response({'error': 'A Summary already exists for this recap.'}, status=status.HTTP_400_BAD_REQUEST)
+        
         serializer = RecapSummarySerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors)
-    
-    
-class RecapSummaryDetailView(RetrieveUpdateDestroyAPIView):
-    queryset = RecapSummary.objects.all()
-    serializer_class = RecapSummarySerializer
-    permission_classes = [AllowAny]
-    
-
-    def retrieve(self, request, recap_id=None, summary_id=None):
-        summary = RecapSummary.objects.get(recap=recap_id, id=summary_id)
-        serializer = RecapSummarySerializer(summary)
-        return Response(serializer.data)
-
-
-    def update(self, request, recap_id=None, summary_id=None):
-        summary = RecapSummary.objects.get(recap=recap_id, id=summary_id)
-        serializer = RecapSummarySerializer(summary, data=request.data, partial=True)
+        
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
-
-
-    def delete(self, request, recap_id=None, summary_id=None):
-        summary = RecapSummary.objects.get(recap=recap_id, id=summary_id)
-        summary.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        else: 
+            return Response(serializer.errors)
+    
+    
     
 class RecapTranscriptView(ListCreateAPIView, DestroyAPIView):
     queryset = RecapTranscript.objects.all()
@@ -129,6 +111,33 @@ class RecapTranscriptView(ListCreateAPIView, DestroyAPIView):
             return Response(serializer.errors)
 
     
+# class RecapSummaryDetailView(RetrieveUpdateDestroyAPIView):
+#     queryset = RecapSummary.objects.all()
+#     serializer_class = RecapSummarySerializer
+#     permission_classes = [AllowAny]
+    
+
+#     def retrieve(self, request, recap_id=None, summary_id=None):
+#         summary = RecapSummary.objects.get(recap=recap_id, id=summary_id)
+#         serializer = RecapSummarySerializer(summary)
+#         return Response(serializer.data)
+
+
+#     def update(self, request, recap_id=None, summary_id=None):
+#         summary = RecapSummary.objects.get(recap=recap_id, id=summary_id)
+#         serializer = RecapSummarySerializer(summary, data=request.data, partial=True)
+#         if serializer.is_valid():
+#             serializer.save()
+#             return Response(serializer.data)
+
+
+#     def delete(self, request, recap_id=None, summary_id=None):
+#         summary = RecapSummary.objects.get(recap=recap_id, id=summary_id)
+#         summary.delete()
+#         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+
 # class MeetingTranscriptDetailView(RetrieveDestroyAPIView):
 #     queryset = MeetingTranscript.objects.all()
 #     serializer_class = MeetingTranscriptSerializer

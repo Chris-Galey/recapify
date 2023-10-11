@@ -20,6 +20,7 @@ export const createUrlApi = async (selectedFile) => {
   console.log(uploadUrl);
   return uploadUrl;
 };
+
 export const summarizeApi = async (audioUrl) => {
   const headers = {
     authorization: api_token,

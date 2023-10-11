@@ -1,13 +1,8 @@
 import { useState } from "react";
 
 export default function UserAudioUpload({ updateSelectedFile }) {
-  const [selectedFile, setSelectedFile] = useState(null);
+  const [selectedFile, setSelectedFile] = useState();
 
-  //   const fetchSummary = async () => {
-  //     const audioUrl = await createUrlApi(selectedFile);
-  //     const summary = await summarizeApi(audioUrl);
-  //     console.log(summary);
-  //   };
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     setSelectedFile(file);
@@ -17,16 +12,14 @@ export default function UserAudioUpload({ updateSelectedFile }) {
   return (
     <div>
       <h1>File Upload</h1>
-      <input type="file" accept=".mp3,.wav,.ogg" onChange={handleFileChange} />
+      <input
+        type="file"
+        accept=".mp3,.wav,.ogg"
+        value={selectedFile}
+        onChange={handleFileChange}
+      />
 
-      {selectedFile && (
-        <div>
-          <p>Selected File: {selectedFile.name}</p>
-          {/* Display additional information about the selected file */}
-          <p>File Type: {selectedFile.type}</p>
-          <p>File Size: {selectedFile.size} bytes</p>
-        </div>
-      )}
+      {selectedFile && <p>Selected File: {selectedFile.name}</p>}
     </div>
   );
 }
