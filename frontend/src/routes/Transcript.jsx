@@ -19,7 +19,7 @@ export default function Transcript() {
   return (
     <div>
       <h1>Transcript</h1>
-      <p>{transcript ? transcript.raw_transcript : ""}</p>
+      <p>{transcript ? transcript.raw_transcript : "No Transcript"}</p>
       <div>
         <button>Edit</button>
         <button>Save</button>

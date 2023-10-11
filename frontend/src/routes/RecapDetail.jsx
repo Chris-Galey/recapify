@@ -1,6 +1,7 @@
 import { Outlet, Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import UserInput from "../components/UserInput";
 import styles from "../styles/RecapDetail.module.css";
 
 export default function RecapDetail() {
@@ -19,7 +20,7 @@ export default function RecapDetail() {
   return (
     <div className={styles.recap__main}>
       <h2>{recap.title}</h2>
-      <div>Input</div>
+      <UserInput />
       <div>
         <Link to="transcript"> Transcript</Link>
         <Link to="summaries"> Summary</Link>
