@@ -1,25 +1,30 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { createUrlApi } from "../api/AssemblyApi";
 
-export default function UserAudioUpload({ updateSelectedFile }) {
-  const [selectedFile, setSelectedFile] = useState();
+export default function UserAudioUpload({ userUploadUrl }) {
+  const [selectedFile, setSelectedFile] = useState("");
 
   const handleFileChange = (e) => {
+    e.preventDefault();
     const file = e.target.files[0];
     setSelectedFile(file);
-    updateSelectedFile(selectedFile);
+  };
+
+  const handleUserInput = async () => {
+    if (selectedFile) {
+      const userInput = await createUrlApi(selectedFile);
+      userUploadUrl(userInput);
+      setSelectedFile(null);
+    }
   };
 
   return (
     <div>
       <h1>File Upload</h1>
-      <input
-        type="file"
-        accept=".mp3,.wav,.ogg"
-        value={selectedFile}
-        onChange={handleFileChange}
-      />
+      <input type="file" accept=".mp3,.wav,.ogg" onChange={handleFileChange} />
 
       {selectedFile && <p>Selected File: {selectedFile.name}</p>}
+      <button onClick={handleUserInput}>Process Input</button>
     </div>
   );
 }

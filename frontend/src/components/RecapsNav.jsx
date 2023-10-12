@@ -7,14 +7,11 @@ export default function RecapsNav() {
   const [recaps, setRecaps] = useState([]);
   const [title, setTitle] = useState();
   const [description, setDescription] = useState();
-  console.log(title);
-  console.log(recaps);
 
   useEffect(() => {
     const handleAllRecap = async () => {
       const data = await fetch("http://127.0.0.1:8000/recaps/");
       const res = await data.json();
-      console.log(res);
       setRecaps(res);
     };
     handleAllRecap();
@@ -29,7 +26,6 @@ export default function RecapsNav() {
     });
     const res = await data.json();
     setRecaps([...recaps, res]);
-    console.log(res);
     setTitle("");
     setDescription("");
   };

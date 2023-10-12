@@ -1,25 +1,30 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import UserAudioUrl from "./UserAudioUrl";
 import UserAudioUpload from "./UserAudioUpload";
 import styles from "../styles/UserInput.module.css";
-export default function UserInput({ audioInput }) {
-  const [selectedUrl, setSelectedUrl] = useState(null);
-  const [selectedFile, setSelectedFile] = useState(null);
+
+export default function UserInput({ generatedUrl }) {
+  const [customUrl, setCustomUrl] = useState(null);
+  const [uploadUrl, setUploadUrl] = useState(null);
   const [audioOption, setAudioOption] = useState("url");
-  console.log(selectedUrl);
-  const updateSelectedUrl = (updateSelectedUrl) => {
-    setSelectedUrl(updateSelectedUrl);
+
+  const userUrl = (url) => {
+    setCustomUrl(url);
   };
-  const updateSelectedFile = (file) => {
-    setSelectedFile(file);
+
+  const userUploadUrl = (url) => {
+    setUploadUrl(url);
   };
-  const handleAudio = () => {
-    if (audioOption == "url") {
-      audioInput(selectedUrl);
-    } else if (audioOption == "upload") {
-      audioInput(selectedFile);
+  useEffect(() => {
+    if (audioOption === "url") {
+      generatedUrl(customUrl);
+      console.log(customUrl);
+    } else if (audioOption === "upload") {
+      generatedUrl(uploadUrl);
+      console.log(uploadUrl);
     }
-  };
+  }, [audioOption, customUrl, uploadUrl, generatedUrl]);
+
   return (
     <div className={styles.user__main}>
       <div className={styles.user__select}>
@@ -37,12 +42,11 @@ export default function UserInput({ audioInput }) {
       </div>
       <div className={styles.user__input}>
         {audioOption == "url" ? (
-          <UserAudioUrl updateSelectedUrl={updateSelectedUrl} />
+          <UserAudioUrl userUrl={userUrl} />
         ) : (
-          <UserAudioUpload updateSelectedFile={updateSelectedFile} />
+          <UserAudioUpload userUploadUrl={userUploadUrl} />
         )}
       </div>
-      <button onClick={handleAudio}>Done</button>
     </div>
   );
 }

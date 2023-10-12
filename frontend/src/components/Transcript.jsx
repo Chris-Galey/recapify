@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { createUrlApi, summarizeApi } from "../api/AssemblyApi";
+import { summarizeApi } from "../api/AssemblyApi";
+import g from "feather-icons";
 
-export default function Transcript({ audioInput }) {
+export default function Transcript({ generatedUrl }) {
   const { recapId } = useParams();
   const [transcript, setTranscript] = useState([]);
-  console.log(audioInput);
+  console.log(generatedUrl);
+
   useEffect(() => {
     const handleTranscript = async () => {
       const data = await fetch(
@@ -17,17 +19,6 @@ export default function Transcript({ audioInput }) {
     handleTranscript();
   }, [recapId]);
 
-  // const handleFetchTranscript = async (audioInput) => {
-  //   console.log(audioInput);
-  //   if (transcript != null) {
-  //     const audioUrl = await createUrlApi(audioInput);
-  //     const transcript = await summarizeApi(audioUrl);
-  //     console.log(transcript);
-  //   } else {
-  //     console.log("Transcript already exists");
-  //   }
-  // };
-
   return (
     <div>
       <h1>Transcript</h1>
@@ -35,7 +26,6 @@ export default function Transcript({ audioInput }) {
       <div>
         <button>Save</button>
         <button>Delete</button>
-        {/* <button onClick={handleFetchTranscript}>Get Transcript</button> */}
       </div>
     </div>
   );

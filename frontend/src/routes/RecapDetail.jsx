@@ -8,8 +8,8 @@ import styles from "../styles/RecapDetail.module.css";
 export default function RecapDetail() {
   const { recapId } = useParams();
   const [recap, setRecap] = useState({});
-  const [audioInput, SetAudioInput] = useState();
-  console.log(audioInput);
+  const [url, setUrl] = useState(null);
+  console.log(url);
   useEffect(() => {
     const handleRecap = async () => {
       const data = await fetch(`http://127.0.0.1:8000/recaps/${recapId}/`);
@@ -19,15 +19,17 @@ export default function RecapDetail() {
     handleRecap();
   }, [recapId]);
 
-  const handleAudioInput = (audioInput) => {
-    SetAudioInput(audioInput);
-    console.log(audioInput);
+  const audioUrl = (url) => {
+    setUrl(url);
   };
+
+  const handleUserRecap = async () => {};
   return (
     <div className={styles.recap__main}>
-      <UserInput audioInput={handleAudioInput} />
-      <Transcript audioInput={audioInput} />
-      <Summary />
+      <UserInput generatedUrl={audioUrl} />
+      <Transcript generatedUrl={url} />
+      <Summary generatedUrl={url} />
+      <button onClick={handleUserRecap}>Recapify!</button>
     </div>
   );
 }
