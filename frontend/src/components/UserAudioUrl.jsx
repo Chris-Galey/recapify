@@ -14,7 +14,7 @@ export default function UserAudioFile({ userUrl }) {
   };
   const handleUserInput = () => {
     userUrl(selectedUrl);
-    setSelectedUrl(null);
+    setSelectedUrl("");
   };
   return (
     <div>

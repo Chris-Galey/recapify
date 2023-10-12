@@ -18,10 +18,8 @@ export default function UserInput({ generatedUrl }) {
   useEffect(() => {
     if (audioOption === "url") {
       generatedUrl(customUrl);
-      console.log(customUrl);
     } else if (audioOption === "upload") {
       generatedUrl(uploadUrl);
-      console.log(uploadUrl);
     }
   }, [audioOption, customUrl, uploadUrl, generatedUrl]);
 

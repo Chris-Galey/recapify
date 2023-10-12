@@ -21,7 +21,7 @@ export const createUrlApi = async (selectedFile) => {
   return uploadUrl;
 };
 
-export const summarizeApi = async (audioUrl) => {
+export const transcriptResultApi = async (audioUrl) => {
   const headers = {
     authorization: api_token,
     "content-type": "application/json",

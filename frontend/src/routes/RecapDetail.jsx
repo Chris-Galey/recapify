@@ -9,7 +9,7 @@ export default function RecapDetail() {
   const { recapId } = useParams();
   const [recap, setRecap] = useState({});
   const [url, setUrl] = useState(null);
-  console.log(url);
+
   useEffect(() => {
     const handleRecap = async () => {
       const data = await fetch(`http://127.0.0.1:8000/recaps/${recapId}/`);
@@ -27,9 +27,9 @@ export default function RecapDetail() {
   return (
     <div className={styles.recap__main}>
       <UserInput generatedUrl={audioUrl} />
+      <button onClick={handleUserRecap}>Recapify!</button>
       <Transcript generatedUrl={url} />
       <Summary generatedUrl={url} />
-      <button onClick={handleUserRecap}>Recapify!</button>
     </div>
   );
 }
