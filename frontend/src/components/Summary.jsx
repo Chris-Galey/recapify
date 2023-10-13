@@ -1,17 +1,20 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { getSummary } from "../api/Api";
 import styles from "../styles/Summary.module.css";
 
 export default function SummaryDetail() {
   const { recapId } = useParams();
-  const [summary, setSummary] = useState({});
+  const [summary, setSummary] = useState([]);
+
   useEffect(() => {
     const handleSummary = async () => {
-      const data = await fetch(
-        `http://127.0.0.1:8000/recaps/${recapId}/summary/`
-      );
-      const res = await data.json();
-      setSummary(res);
+      const data = await getSummary(recapId);
+      if (data) {
+        setSummary(data);
+      } else {
+        setSummary([]);
+      }
     };
     handleSummary();
   }, [recapId]);
@@ -19,7 +22,7 @@ export default function SummaryDetail() {
   return (
     <div className={styles.wrapper}>
       <h3>Summary</h3>
-      <p>{summary.content}</p>
+      <p>{summary ? summary.content : "No Summary"}</p>
     </div>
   );
 }

@@ -19,7 +19,7 @@ class RecapTranscript(models.Model):
         return f"Transcript for {self.recap.title}"
     
 class RecapSummary(models.Model):
-    recap = models.ForeignKey(Recap, on_delete=models.CASCADE, related_name='summaries')
+    recap = models.OneToOneField(Recap, on_delete=models.CASCADE, related_name='summaries')
     # author = models.ForeignKey(User, null=True, on_delete=models.CASCADE, related_name='authored_summaries')
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)

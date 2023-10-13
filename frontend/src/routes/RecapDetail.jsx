@@ -1,5 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { getRecapDetail } from "../api/Api";
 import UserInput from "../components/UserInput";
 import Customize from "../components/Customize";
 import Transcript from "../components/Transcript";
@@ -8,14 +9,13 @@ import styles from "../styles/RecapDetail.module.css";
 
 export default function RecapDetail() {
   const { recapId } = useParams();
-  const [recap, setRecap] = useState({});
+  const [recap, setRecap] = useState([]);
   const [url, setUrl] = useState(null);
-  console.log(url);
+
   useEffect(() => {
     const handleRecap = async () => {
-      const data = await fetch(`http://127.0.0.1:8000/recaps/${recapId}/`);
-      const res = await data.json();
-      setRecap(res);
+      const data = await getRecapDetail(recapId);
+      setRecap(data);
     };
     handleRecap();
   }, [recapId]);
@@ -24,7 +24,6 @@ export default function RecapDetail() {
     setUrl(url);
   };
 
-  const handleUserRecap = async () => {};
   return (
     <div className={styles.wrapper}>
       <UserInput generatedUrl={audioUrl} />
@@ -33,7 +32,7 @@ export default function RecapDetail() {
         <Transcript generatedUrl={url} />
         <Summary generatedUrl={url} />
       </div>
-      <button onClick={handleUserRecap}>Recapify!</button>
+      {/* <button onClick={handleUserRecap}>Recapify!</button> */}
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import UserUrl from "./UserUrl";
 import UserUpload from "./UserUpload";
 import styles from "../styles/UserInput.module.css";
@@ -8,7 +8,6 @@ export default function UserInput({ generatedUrl }) {
   const [uploadUrl, setUploadUrl] = useState("");
   const [currentUrl, setCurrentUrl] = useState("");
   const [audioOption, setAudioOption] = useState("url");
-  console.log(currentUrl);
 
   const userUrl = (url) => {
     setUrl(url);

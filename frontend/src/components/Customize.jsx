@@ -8,7 +8,6 @@ export default function Customize() {
   const [type, setType] = useState("");
   const [model, setModel] = useState("");
 
-  console.log(summary);
   return (
     <div className={styles.wrapper}>
       <h1>Customize</h1>

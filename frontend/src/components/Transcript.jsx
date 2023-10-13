@@ -1,17 +1,20 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { getTranscript } from "../api/Api";
 import styles from "../styles/Transcript.module.css";
-export default function Transcript({ generatedUrl }) {
+
+export default function Transcript() {
   const { recapId } = useParams();
   const [transcript, setTranscript] = useState([]);
 
   useEffect(() => {
     const handleTranscript = async () => {
-      const data = await fetch(
-        `http://127.0.0.1:8000/recaps/${recapId}/transcript/`
-      );
-      const res = await data.json();
-      setTranscript(res);
+      const data = await getTranscript(recapId);
+      if (data) {
+        setTranscript(data);
+      } else {
+        setTranscript([]);
+      }
     };
     handleTranscript();
   }, [recapId]);
@@ -19,7 +22,7 @@ export default function Transcript({ generatedUrl }) {
   return (
     <div className={styles.wrapper}>
       <h1>Transcript</h1>
-      <p>{transcript}</p>
+      <p>{transcript ? transcript.raw_transcript : "No Transcript"}</p>
     </div>
   );
 }

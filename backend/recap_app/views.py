@@ -1,4 +1,4 @@
-from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, RetrieveDestroyAPIView, DestroyAPIView
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, UpdateAPIView, DestroyAPIView
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework import status
@@ -55,7 +55,7 @@ class RecapDetailView(RetrieveUpdateDestroyAPIView):
 
 
 
-class RecapSummaryView(ListCreateAPIView):
+class RecapSummaryView(ListCreateAPIView, UpdateAPIView):
     queryset = RecapSummary.objects.all()
     serializer_class = RecapSummarySerializer 
     permission_classes = [AllowAny]
@@ -78,23 +78,32 @@ class RecapSummaryView(ListCreateAPIView):
             return Response(serializer.data)
         else: 
             return Response(serializer.errors)
+        
+    def update(self, request, recap_id=None):
+        summary = RecapSummary.objects.filter(recap=recap_id).first()
+        if summary:
+            serializer = RecapSummarySerializer(summary, data=request.data, partial=True)
+        else:
+            serializer = RecapSummarySerializer(data = request.data)
+            
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
     
     
     
-class RecapTranscriptView(ListCreateAPIView, DestroyAPIView):
+class RecapTranscriptView(ListCreateAPIView, UpdateAPIView):
     queryset = RecapTranscript.objects.all()
     serializer_class = RecapTranscriptSerializer
     permission_classes = [AllowAny]
 
-    def delete(self, request, recap_id=None):
-        transcripts = RecapTranscript.objects.filter(recap=recap_id)
-        transcripts.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
-    
     def list(self, request, recap_id=None):
         transcript = RecapTranscript.objects.get(recap=recap_id)
         serializer = RecapTranscriptSerializer(transcript)
-        return Response(serializer.data)
+        if transcript:
+            return Response(serializer.data)
+        else: 
+            return Response({'error': 'No transcript found for this recap.'}, status=status.HTTP_404_NOT_FOUND)
     
     def create(self, request, recap_id=None):
         
@@ -109,6 +118,25 @@ class RecapTranscriptView(ListCreateAPIView, DestroyAPIView):
             return Response(serializer.data)
         else: 
             return Response(serializer.errors)
+        
+    def update(self, request, recap_id=None):
+        transcript = RecapTranscript.objects.filter(recap=recap_id).first()
+        if transcript:
+            serializer = RecapTranscriptSerializer(transcript, data=request.data, partial=True)
+        else: 
+            serializer = RecapTranscriptSerializer(data=request.data)
+            
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+    
+        
+    # def delete(self, request, recap_id=None):
+    #     transcripts = RecapTranscript.objects.filter(recap=recap_id)
+    #     transcripts.delete()
+    #     return Response(status=status.HTTP_204_NO_CONTENT)
+    
+    
 
     
 # class RecapSummaryDetailView(RetrieveUpdateDestroyAPIView):
@@ -123,12 +151,12 @@ class RecapTranscriptView(ListCreateAPIView, DestroyAPIView):
 #         return Response(serializer.data)
 
 
-#     def update(self, request, recap_id=None, summary_id=None):
-#         summary = RecapSummary.objects.get(recap=recap_id, id=summary_id)
-#         serializer = RecapSummarySerializer(summary, data=request.data, partial=True)
-#         if serializer.is_valid():
-#             serializer.save()
-#             return Response(serializer.data)
+    # def update(self, request, recap_id=None, summary_id=None):
+    #     summary = RecapSummary.objects.get(recap=recap_id, id=summary_id)
+    #     serializer = RecapSummarySerializer(summary, data=request.data, partial=True)
+    #     if serializer.is_valid():
+    #         serializer.save()
+    #         return Response(serializer.data)
 
 
 #     def delete(self, request, recap_id=None, summary_id=None):
