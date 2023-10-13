@@ -1,50 +1,65 @@
 import { useState, useEffect } from "react";
-import UserAudioUrl from "./UserAudioUrl";
-import UserAudioUpload from "./UserAudioUpload";
+import UserUrl from "./UserUrl";
+import UserUpload from "./UserUpload";
 import styles from "../styles/UserInput.module.css";
 
 export default function UserInput({ generatedUrl }) {
-  const [customUrl, setCustomUrl] = useState(null);
-  const [uploadUrl, setUploadUrl] = useState(null);
+  const [url, setUrl] = useState("");
+  const [uploadUrl, setUploadUrl] = useState("");
+  const [currentUrl, setCurrentUrl] = useState("");
   const [audioOption, setAudioOption] = useState("url");
+  console.log(currentUrl);
 
   const userUrl = (url) => {
-    setCustomUrl(url);
+    setUrl(url);
   };
 
   const userUploadUrl = (url) => {
     setUploadUrl(url);
   };
-  useEffect(() => {
+  const handleSaveUrl = () => {
     if (audioOption === "url") {
-      generatedUrl(customUrl);
-    } else if (audioOption === "upload") {
-      generatedUrl(uploadUrl);
+      setCurrentUrl(url);
+      generatedUrl(currentUrl);
+      // save to db
+    } else {
+      setCurrentUrl(uploadUrl);
+      generatedUrl(currentUrl);
+      // save to db
     }
-  }, [audioOption, customUrl, uploadUrl, generatedUrl]);
+  };
 
   return (
-    <div className={styles.user__main}>
-      <div className={styles.user__select}>
+    <div className={styles.wrapper}>
+      <div className={styles.header}>
         <h1>UserInput</h1>
-        <select
-          name="input"
-          id="input"
-          onChange={(e) => {
-            setAudioOption(e.target.value);
-          }}
-        >
-          <option value="url">URL</option>
-          <option value="upload">Upload</option>
-        </select>
+        <p>Current File: {currentUrl}</p>
       </div>
-      <div className={styles.user__input}>
+
+      <div className={styles.select}>
+        <label htmlFor="input">
+          Input Type:
+          <select
+            name="input"
+            id="input"
+            onChange={(e) => {
+              setAudioOption(e.target.value);
+            }}
+          >
+            <option value="url">URL</option>
+            <option value="upload">Upload</option>
+          </select>
+        </label>
+      </div>
+
+      <div className={styles.input}>
         {audioOption == "url" ? (
-          <UserAudioUrl userUrl={userUrl} />
+          <UserUrl userUrl={userUrl} />
         ) : (
-          <UserAudioUpload userUploadUrl={userUploadUrl} />
+          <UserUpload userUploadUrl={userUploadUrl} />
         )}
       </div>
+      <button onClick={handleSaveUrl}>Generate Link</button>
     </div>
   );
 }

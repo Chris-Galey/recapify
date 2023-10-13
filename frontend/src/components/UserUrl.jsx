@@ -1,7 +1,12 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import styles from "../styles/UserUrl.module.css";
 // test url https://download.ted.com/talks/BodyStuffS002E001_Smell_2022V.mp3?apikey=acme-roadrunner
-export default function UserAudioFile({ userUrl }) {
+export default function UserFile({ userUrl }) {
   const [selectedUrl, setSelectedUrl] = useState("");
+
+  useEffect(() => {
+    userUrl(selectedUrl);
+  }, [selectedUrl, userUrl]);
 
   const handleUrlChange = (e) => {
     setSelectedUrl(e.target.value);
@@ -12,12 +17,8 @@ export default function UserAudioFile({ userUrl }) {
     const paste = e.clipboardData.getData("text");
     setSelectedUrl(selectedUrl + paste);
   };
-  const handleUserInput = () => {
-    userUrl(selectedUrl);
-    setSelectedUrl("");
-  };
   return (
-    <div>
+    <div className={styles.wrapper}>
       <h1>Enter Audio URL</h1>
       <input
         type="text"
@@ -25,7 +26,6 @@ export default function UserAudioFile({ userUrl }) {
         onPaste={handleUrlPaste}
         onChange={handleUrlChange}
       />
-      <button onClick={handleUserInput}>Process Input</button>
     </div>
   );
 }

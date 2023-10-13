@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import styles from "../styles/Transcript.module.css";
 export default function Transcript({ generatedUrl }) {
   const { recapId } = useParams();
   const [transcript, setTranscript] = useState([]);
@@ -16,13 +17,9 @@ export default function Transcript({ generatedUrl }) {
   }, [recapId]);
 
   return (
-    <div>
+    <div className={styles.wrapper}>
       <h1>Transcript</h1>
       <p>{transcript}</p>
-      <div>
-        <button>Save</button>
-        <button>Delete</button>
-      </div>
     </div>
   );
 }

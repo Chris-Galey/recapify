@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { createUrlApi } from "../api/AssemblyApi";
 
 export default function UserAudioUpload({ userUploadUrl }) {
@@ -24,7 +24,7 @@ export default function UserAudioUpload({ userUploadUrl }) {
       <input type="file" accept=".mp3,.wav,.ogg" onChange={handleFileChange} />
 
       {selectedFile && <p>Selected File: {selectedFile.name}</p>}
-      <button onClick={handleUserInput}>Process Input</button>
+      <button onClick={handleUserInput}>Upload</button>
     </div>
   );
 }

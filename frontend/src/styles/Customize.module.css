@@ -1,0 +1,16 @@
+.wrapper {
+  width: 100%;
+  background-color: beige;
+  display: flex;
+  flex: 2;
+  flex-direction: column;
+}
+.form {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.form__summarize {
+  display: flex;
+  flex-direction: column;
+}

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import styles from "../styles/Summary.module.css";
 
 export default function SummaryDetail() {
   const { recapId } = useParams();
@@ -16,12 +17,9 @@ export default function SummaryDetail() {
   }, [recapId]);
 
   return (
-    <div>
+    <div className={styles.wrapper}>
       <h3>Summary</h3>
       <p>{summary.content}</p>
-      <button>Recapify</button>
-      <button>Save</button>
-      <button>Delete</button>
     </div>
   );
 }

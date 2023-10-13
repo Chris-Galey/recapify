@@ -1,13 +1,23 @@
-/* .user__main {
-  width: 33%;
+.wrapper {
+  width: 100%;
+  display: flex;
+  flex: 2;
+  flex-direction: row;
+  align-items: center;
+  gap: 10rem;
+}
+.select {
+  display: flex;
+  flex-direction: row;
+}
+.input {
+  display: flex;
+}
+.form {
   display: flex;
   flex-direction: column;
 }
-.user__select {
-  width: 50%;
+.header {
   display: flex;
+  flex-direction: column;
 }
-.user__input {
-  width: 50%;
-  display: flex;
-} */
