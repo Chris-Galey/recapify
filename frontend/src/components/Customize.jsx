@@ -1,13 +1,15 @@
 import { useState } from "react";
 import styles from "../styles/Customize.module.css";
 export default function Customize() {
-  const [summary, setSummary] = useState(false);
-  const [keywords, setKeywords] = useState(false);
-  const [sentiment, setSentiment] = useState(false);
-  const [labelSpeakers, setLabelSpeakers] = useState(false);
-  const [type, setType] = useState("");
-  const [model, setModel] = useState("");
-
+  const [sharedState, setSharedState] = useState({
+    summary: false,
+    type: "",
+    model: "",
+    keywords: false,
+    sentiment: false,
+    labelSpeakers: false,
+  });
+  console.log(sharedState.summary);
   return (
     <div className={styles.wrapper}>
       <h1>Customize</h1>
@@ -19,19 +21,26 @@ export default function Customize() {
             <input
               type="checkbox"
               id="summary"
+              checked={sharedState.summary}
               onChange={(e) => {
-                setSummary(e.target.checked);
+                setSharedState({ ...sharedState, summary: e.target.checked });
               }}
             />
           </label>
           <label htmlFor="summary-type">
             Type:
-            <select name="summary-type" id="summary-type">
-              <option value="1" id="paragraph">
-                Paragraph
-              </option>
-              <option value="2" id="bullets">
+            <select
+              name="summary-type"
+              id="summary-type"
+              onChange={(e) => {
+                setSharedState({ ...sharedState, type: e.target.value });
+              }}
+            >
+              <option value="bullets" id="bullets">
                 bullets
+              </option>
+              <option value="paragraph" id="paragraph">
+                paragraph
               </option>
             </select>
           </label>

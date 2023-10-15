@@ -16,15 +16,14 @@ export default function UserInput({ generatedUrl }) {
   const userUploadUrl = (url) => {
     setUploadUrl(url);
   };
+
   const handleSaveUrl = () => {
     if (audioOption === "url") {
       setCurrentUrl(url);
       generatedUrl(currentUrl);
-      // save to db
     } else {
       setCurrentUrl(uploadUrl);
       generatedUrl(currentUrl);
-      // save to db
     }
   };
 

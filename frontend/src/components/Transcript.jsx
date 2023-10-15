@@ -3,26 +3,27 @@ import { useParams } from "react-router-dom";
 import { getTranscript } from "../api/Api";
 import styles from "../styles/Transcript.module.css";
 
-export default function Transcript() {
+export default function Transcript({ transcript }) {
   const { recapId } = useParams();
-  const [transcript, setTranscript] = useState([]);
+  const [text, setText] = useState();
 
   useEffect(() => {
-    const handleTranscript = async () => {
-      const data = await getTranscript(recapId);
-      if (data) {
-        setTranscript(data);
-      } else {
-        setTranscript([]);
-      }
+    const handleInitialData = async () => {
+      const transcriptData = await getTranscript(recapId);
+      console.log(transcriptData);
+      setText(transcriptData.raw_transcript);
     };
-    handleTranscript();
+    handleInitialData();
   }, [recapId]);
+
+  useEffect(() => {
+    setText(transcript);
+  }, [recapId, transcript]);
 
   return (
     <div className={styles.wrapper}>
       <h1>Transcript</h1>
-      <p>{transcript ? transcript.raw_transcript : "No Transcript"}</p>
+      <p>{text ? text : "No Transcript"}</p>
     </div>
   );
 }

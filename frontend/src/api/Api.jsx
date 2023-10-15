@@ -50,13 +50,13 @@ export const getTranscript = async (recapId) => {
   return res;
 };
 
-export const updateTranscript = async (recapId, transcript) => {
+export const updateTranscript = async (recapId, raw_transcript) => {
   const data = await fetch(
-    `http://127.0.0.1:8000/recaps/${recapId}/transcript`,
+    `http://127.0.0.1:8000/recaps/${recapId}/transcript/`,
     {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ raw_transcript: transcript }),
+      body: JSON.stringify({ raw_transcript }),
     }
   );
   const res = await data.json();
@@ -71,11 +71,11 @@ export const getSummary = async (recapId) => {
   return res;
 };
 
-export const updateSummary = async (recapId, summary) => {
-  const data = await fetch(`http://127.0.0.1:8000/recaps/${recapId}/summary`, {
+export const updateSummary = async (recapId, content) => {
+  const data = await fetch(`http://127.0.0.1:8000/recaps/${recapId}/summary/`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ content: summary }),
+    body: JSON.stringify({ content }),
   });
   const res = await data.json();
   return res;

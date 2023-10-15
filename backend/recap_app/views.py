@@ -1,4 +1,4 @@
-from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, UpdateAPIView, DestroyAPIView
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, UpdateAPIView, DestroyAPIView, RetrieveAPIView
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework import status
@@ -55,80 +55,90 @@ class RecapDetailView(RetrieveUpdateDestroyAPIView):
 
 
 
-class RecapSummaryView(ListCreateAPIView, UpdateAPIView):
+class RecapSummaryView(RetrieveAPIView, UpdateAPIView):
     queryset = RecapSummary.objects.all()
     serializer_class = RecapSummarySerializer 
     permission_classes = [AllowAny]
     
 
-    def list(self, request, recap_id=None):
-        queryset = self.get_queryset().filter(recap=recap_id)
-        serializer = RecapSummarySerializer(queryset, many=True)
-        return Response(serializer.data)
-
-    def create(self, request, recap_id=None):
-        exisiting_transcript = self.get_queryset().filter(recap=recap_id).first()
-        if exisiting_transcript:
-            return Response({'error': 'A Summary already exists for this recap.'}, status=status.HTTP_400_BAD_REQUEST)
-        
-        serializer = RecapSummarySerializer(data=request.data)
-        
-        if serializer.is_valid():
-            serializer.save()
+    def retrieve(self, request, recap_id=None):
+        summary = RecapSummary.objects.get(recap=recap_id)
+        serializer = RecapSummarySerializer(summary, many=False)
+        if summary:
             return Response(serializer.data)
-        else: 
-            return Response(serializer.errors)
+        
+
+    # def create(self, request, recap_id=None):
+    #     exisiting_transcript = self.get_queryset().filter(recap=recap_id).first()
+    #     if exisiting_transcript:
+    #         return Response({'error': 'A Summary already exists for this recap.'}, status=status.HTTP_400_BAD_REQUEST)
+        
+    #     serializer = RecapSummarySerializer(data=request.data)
+        
+    #     if serializer.is_valid():
+    #         serializer.save()
+    #         return Response(serializer.data)
+    #     else: 
+    #         return Response(serializer.errors)
         
     def update(self, request, recap_id=None):
         summary = RecapSummary.objects.filter(recap=recap_id).first()
         if summary:
             serializer = RecapSummarySerializer(summary, data=request.data, partial=True)
         else:
-            serializer = RecapSummarySerializer(data = request.data)
+            data = request.data
+            data['recap'] = recap_id
+            serializer = RecapSummarySerializer(data=data)
+            
             
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
     
     
-class RecapTranscriptView(ListCreateAPIView, UpdateAPIView):
+class RecapTranscriptView(RetrieveAPIView, UpdateAPIView):
     queryset = RecapTranscript.objects.all()
     serializer_class = RecapTranscriptSerializer
     permission_classes = [AllowAny]
 
-    def list(self, request, recap_id=None):
+    def retrieve(self, request, recap_id=None):
         transcript = RecapTranscript.objects.get(recap=recap_id)
-        serializer = RecapTranscriptSerializer(transcript)
+        serializer = RecapTranscriptSerializer(transcript, many=False)
         if transcript:
             return Response(serializer.data)
         else: 
             return Response({'error': 'No transcript found for this recap.'}, status=status.HTTP_404_NOT_FOUND)
     
-    def create(self, request, recap_id=None):
+    # def create(self, request, recap_id=None):
         
-        exisiting_transcript = self.get_queryset().filter(recap=recap_id).first()
-        if exisiting_transcript:
-            return Response({'error': 'A transcript already exists for this recap.'}, status=status.HTTP_400_BAD_REQUEST)
+    #     exisiting_transcript = self.get_queryset().filter(recap=recap_id).first()
+    #     if exisiting_transcript:
+    #         return Response({'error': 'A transcript already exists for this recap.'}, status=status.HTTP_400_BAD_REQUEST)
         
-        serializer = RecapTranscriptSerializer(data=request.data)
+    #     serializer = RecapTranscriptSerializer(data=request.data)
         
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        else: 
-            return Response(serializer.errors)
+    #     if serializer.is_valid():
+    #         serializer.save()
+    #         return Response(serializer.data)
+    #     else: 
+    #         return Response(serializer.errors)
         
     def update(self, request, recap_id=None):
         transcript = RecapTranscript.objects.filter(recap=recap_id).first()
+        print(transcript)
         if transcript:
             serializer = RecapTranscriptSerializer(transcript, data=request.data, partial=True)
-        else: 
-            serializer = RecapTranscriptSerializer(data=request.data)
-            
+        else:
+            data = request.data
+            data['recap'] = recap_id
+            serializer = RecapTranscriptSerializer(data=data)
+        
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
         
     # def delete(self, request, recap_id=None):

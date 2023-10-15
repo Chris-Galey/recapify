@@ -3,26 +3,27 @@ import { useParams } from "react-router-dom";
 import { getSummary } from "../api/Api";
 import styles from "../styles/Summary.module.css";
 
-export default function SummaryDetail() {
+export default function Summary({ summary }) {
   const { recapId } = useParams();
-  const [summary, setSummary] = useState([]);
+  const [text, setText] = useState();
 
   useEffect(() => {
-    const handleSummary = async () => {
-      const data = await getSummary(recapId);
-      if (data) {
-        setSummary(data);
-      } else {
-        setSummary([]);
-      }
+    const handleInitialData = async () => {
+      const summaryData = await getSummary(recapId);
+      console.log(summaryData);
+      setText(summaryData.content);
     };
-    handleSummary();
+    handleInitialData();
   }, [recapId]);
+
+  useEffect(() => {
+    setText(summary);
+  }, [recapId, summary]);
 
   return (
     <div className={styles.wrapper}>
       <h3>Summary</h3>
-      <p>{summary ? summary.content : "No Summary"}</p>
+      <p>{text ? text : "No Summary"}</p>
     </div>
   );
 }

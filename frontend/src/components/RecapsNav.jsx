@@ -6,8 +6,10 @@ import styles from "../styles/RecapsNav.module.css";
 
 export default function RecapsNav() {
   const [recaps, setRecaps] = useState([]);
-  const [title, setTitle] = useState();
-  const [description, setDescription] = useState();
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+
+  console.log(recaps);
 
   useEffect(() => {
     const fetchRecaps = async () => {
@@ -15,36 +17,27 @@ export default function RecapsNav() {
       setRecaps(data);
     };
     fetchRecaps();
+  }, []);
+
+  useEffect(() => {
+    setTitle("");
+    setDescription("");
   }, [recaps]);
 
   const handleNewRecap = async (e) => {
     e.preventDefault();
     const data = await postRecap(title, description);
     setRecaps([...recaps, data]);
-    setTitle("");
-    setDescription("");
   };
+
   const handleDeleteRecap = async (recapId) => {
     await deleteRecapDetail(recapId);
-    const newRecaps = recaps.filter((recap) => recap.id !== recapId);
-    setRecaps(newRecaps);
   };
 
   return (
     <>
       <div className={styles.sidebar}>
         <div>
-          {/* <form id="search-form" role="search">
-            <input
-              id="q"
-              aria-label="Search Meetings"
-              placeholder="Search"
-              type="search"
-              name="q"
-            />
-            <div id="search-spinner" aria-hidden hidden={true} />
-            <div className="sr-only" aria-live="polite"></div>
-          </form> */}
           <form method="post" onSubmit={handleNewRecap}>
             <label htmlFor="title">
               Title:
@@ -54,7 +47,6 @@ export default function RecapsNav() {
                 onChange={(e) => {
                   setTitle(e.target.value);
                 }}
-                value={title}
               />
             </label>
             <label htmlFor="description">
@@ -65,7 +57,6 @@ export default function RecapsNav() {
                 onChange={(e) => {
                   setDescription(e.target.value);
                 }}
-                value={description}
               />
             </label>
             <button type="submit">Add</button>

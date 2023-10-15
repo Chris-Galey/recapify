@@ -12,8 +12,8 @@ export default function UserAudioUpload({ userUploadUrl }) {
 
   const handleUserInput = async () => {
     if (selectedFile) {
-      const userInput = await createUrlApi(selectedFile);
-      userUploadUrl(userInput);
+      const generatedUrl = await createUrlApi(selectedFile);
+      userUploadUrl(generatedUrl);
       setSelectedFile(null);
     }
   };
