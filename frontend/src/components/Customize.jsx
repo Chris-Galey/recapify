@@ -1,15 +1,18 @@
-import { useState } from "react";
+import { useEffect } from "react";
+import { useParams } from "react-router-dom";
 import styles from "../styles/Customize.module.css";
-export default function Customize() {
-  const [sharedState, setSharedState] = useState({
-    summary: false,
-    type: "",
-    model: "",
-    keywords: false,
-    sentiment: false,
-    labelSpeakers: false,
-  });
-  console.log(sharedState.summary);
+export default function Customize({ customState, onCustomStateChange }) {
+  const { recapId } = useParams();
+  const initialCustomState = {
+    summarization: true,
+    summary_type: "bullets",
+    summary_model: "informative",
+    entity_detection: false,
+  };
+  useEffect(() => {
+    onCustomStateChange(initialCustomState);
+  }, [recapId]);
+
   return (
     <div className={styles.wrapper}>
       <h1>Customize</h1>
@@ -21,9 +24,12 @@ export default function Customize() {
             <input
               type="checkbox"
               id="summary"
-              checked={sharedState.summary}
+              checked={customState.summarization}
               onChange={(e) => {
-                setSharedState({ ...sharedState, summary: e.target.checked });
+                onCustomStateChange({
+                  ...customState,
+                  summarization: e.target.checked,
+                });
               }}
             />
           </label>
@@ -32,8 +38,12 @@ export default function Customize() {
             <select
               name="summary-type"
               id="summary-type"
+              value={customState.summary_type}
               onChange={(e) => {
-                setSharedState({ ...sharedState, type: e.target.value });
+                onCustomStateChange({
+                  ...customState,
+                  summary_type: e.target.value,
+                });
               }}
             >
               <option value="bullets" id="bullets">
@@ -46,11 +56,21 @@ export default function Customize() {
           </label>
           <label htmlFor="summary-model">
             Model:
-            <select name="summary-model" id="summary-model">
-              <option value="1" id="informative">
+            <select
+              name="summary-model"
+              id="summary-model"
+              value={customState.summary_model}
+              onChange={(e) => {
+                onCustomStateChange({
+                  ...customState,
+                  summary_model: e.target.value,
+                });
+              }}
+            >
+              <option value="informative" id="informative">
                 Informative
               </option>
-              <option value="2" id="conversation">
+              <option value="conversation" id="conversation">
                 Conversational
               </option>
             </select>
@@ -58,17 +78,47 @@ export default function Customize() {
         </div>
 
         <label htmlFor="keywords">
-          Keywords:
-          <input type="checkbox" id="keywords" />
+          Key Information:
+          <input
+            type="checkbox"
+            id="keywords"
+            value={customState.entity_detection}
+            onChange={(e) => {
+              onCustomStateChange({
+                ...customState,
+                entity_detection: e.target.checked,
+              });
+            }}
+          />
         </label>
-        <label htmlFor="sentiment">
+        {/* <label htmlFor="sentiment">
           Sentiment:
-          <input type="checkbox" id="sentiment" />
-        </label>
-        <label htmlFor="Label Speakers">
+          <input
+            type="checkbox"
+            id="sentiment"
+            value={customState.sentiment}
+            onChange={(e) => {
+              onCustomStateChange({
+                ...customState,
+                sentiment: e.target.checked,
+              });
+            }}
+          />
+        </label> */}
+        {/* <label htmlFor="Label Speakers">
           Label Speakers:
-          <input type="checkbox" id="Label Speakers" />
-        </label>
+          <input
+            type="checkbox"
+            id="Label Speakers"
+            value={customState.labelSpeakers}
+            onChange={(e) => {
+              onCustomStateChange({
+                ...customState,
+                labelSpeakers: e.target.checked,
+              });
+            }}
+          />
+        </label> */}
       </div>
     </div>
   );

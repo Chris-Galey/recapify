@@ -5,19 +5,22 @@ import styles from "../styles/Transcript.module.css";
 
 export default function Transcript({ transcript }) {
   const { recapId } = useParams();
-  const [text, setText] = useState();
+  const [text, setText] = useState(transcript || "No Transcript");
 
   useEffect(() => {
-    const handleInitialData = async () => {
-      const transcriptData = await getTranscript(recapId);
-      console.log(transcriptData);
-      setText(transcriptData.raw_transcript);
+    const fetchTranscript = async () => {
+      try {
+        const transcriptData = await getTranscript(recapId);
+        setText(transcriptData.raw_transcript || "No Transcript");
+      } catch (error) {
+        console.error("Error fetching transcript:", error);
+      }
     };
-    handleInitialData();
-  }, [recapId]);
-
-  useEffect(() => {
-    setText(transcript);
+    if (!transcript) {
+      fetchTranscript();
+    } else {
+      setText(transcript);
+    }
   }, [recapId, transcript]);
 
   return (

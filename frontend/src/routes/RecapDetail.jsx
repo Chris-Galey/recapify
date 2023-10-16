@@ -13,7 +13,8 @@ export default function RecapDetail() {
   const [recap, setRecap] = useState([]);
   const [url, setUrl] = useState("");
   const [data, setData] = useState([]);
-
+  const [customState, setCustomState] = useState({});
+  console.log(customState);
   useEffect(() => {
     const handleRecap = async () => {
       const data = await getRecapDetail(recapId);
@@ -22,19 +23,22 @@ export default function RecapDetail() {
     handleRecap();
   }, [recapId]);
 
-  const generatedUrl = (url) => {
+  const onUrlChange = (url) => {
     setUrl(url);
+  };
+  const onCustomStateChange = (newState) => {
+    setCustomState(newState);
   };
 
   const handleUserRecap = async () => {
     if (!url) {
       alert("Please upload a file");
       return;
-    } else {
-      const data = await transcriptResultApi(url);
-      console.log(data);
-      setData(data);
     }
+
+    const data = await transcriptResultApi(url, customState);
+    console.log(data);
+    setData(data);
   };
 
   const handleSaveRecap = async () => {
@@ -46,8 +50,11 @@ export default function RecapDetail() {
   return (
     <div className={styles.wrapper}>
       <h1>{recap.title}</h1>
-      <UserInput generatedUrl={generatedUrl} />
-      <Customize sharedState={sharedState} />
+      <UserInput onUrlChange={onUrlChange} />
+      <Customize
+        customState={customState}
+        onCustomStateChange={onCustomStateChange}
+      />
       <div className={styles.content}>
         <Transcript transcript={data.text} />
         <Summary summary={data.summary} />

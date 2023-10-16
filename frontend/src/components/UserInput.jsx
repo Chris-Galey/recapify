@@ -1,36 +1,41 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import UserUrl from "./UserUrl";
 import UserUpload from "./UserUpload";
 import styles from "../styles/UserInput.module.css";
 
-export default function UserInput({ generatedUrl }) {
-  const [url, setUrl] = useState("");
-  const [uploadUrl, setUploadUrl] = useState("");
-  const [currentUrl, setCurrentUrl] = useState("");
+export default function UserInput({ onUrlChange }) {
+  const { recapId } = useParams();
+  const [userUrl, setUserUrl] = useState("");
+  const [userUploadUrl, setUserUploadUrl] = useState("");
   const [audioOption, setAudioOption] = useState("url");
+  const [currentUrl, setCurrentUrl] = useState("");
 
-  const userUrl = (url) => {
-    setUrl(url);
+  const onUserUrlChange = (newUrl) => {
+    setUserUrl(newUrl);
+  };
+  const onUserUploadUrlChange = (newUrl) => {
+    setUserUploadUrl(newUrl);
   };
 
-  const userUploadUrl = (url) => {
-    setUploadUrl(url);
-  };
-
-  const handleSaveUrl = () => {
+  useEffect(() => {
     if (audioOption === "url") {
-      setCurrentUrl(url);
-      generatedUrl(currentUrl);
+      setCurrentUrl(userUrl);
+      onUrlChange(userUrl);
     } else {
-      setCurrentUrl(uploadUrl);
-      generatedUrl(currentUrl);
+      setCurrentUrl(userUploadUrl);
+      onUrlChange(userUploadUrl);
     }
-  };
+  }, [audioOption, userUrl, userUploadUrl]);
+
+  useEffect(() => {
+    setUserUrl("");
+    setUserUploadUrl("");
+  }, [recapId]);
 
   return (
     <div className={styles.wrapper}>
       <div className={styles.header}>
-        <h1>UserInput</h1>
         <p>Current File: {currentUrl}</p>
       </div>
 
@@ -52,12 +57,14 @@ export default function UserInput({ generatedUrl }) {
 
       <div className={styles.input}>
         {audioOption == "url" ? (
-          <UserUrl userUrl={userUrl} />
+          <UserUrl userUrl={userUrl} onUserUrlChange={onUserUrlChange} />
         ) : (
-          <UserUpload userUploadUrl={userUploadUrl} />
+          <UserUpload
+            userUploadUrl={userUploadUrl}
+            onUserUploadUrlChange={onUserUploadUrlChange}
+          />
         )}
       </div>
-      <button onClick={handleSaveUrl}>Generate Link</button>
     </div>
   );
 }

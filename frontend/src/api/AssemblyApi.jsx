@@ -21,16 +21,14 @@ export const createUrlApi = async (selectedFile) => {
   return uploadUrl;
 };
 
-export const transcriptResultApi = async (audioUrl) => {
+export const transcriptResultApi = async (url, customState) => {
   const headers = {
     authorization: api_token,
     "content-type": "application/json",
   };
   const data = {
-    audio_url: audioUrl,
-    summarization: true,
-    summary_model: "informative",
-    summary_type: "bullets_verbose",
+    audio_url: url,
+    ...customState,
   };
   try {
     // Send the request to create a transcript with summarization
