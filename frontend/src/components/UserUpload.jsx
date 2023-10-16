@@ -1,11 +1,9 @@
 import { useState } from "react";
-import { createUrlApi } from "../api/AssemblyApi";
+import { assemblyGenerateUrl } from "../api/Api";
 
-export default function UserAudioUpload({
-  userUploadUrl,
-  onUserUploadUrlChange,
-}) {
+export default function UserAudioUpload({ onUserUploadUrlChange }) {
   const [selectedFile, setSelectedFile] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleFileChange = (e) => {
     e.preventDefault();
@@ -14,9 +12,16 @@ export default function UserAudioUpload({
   };
 
   const handleUserInput = async () => {
-    if (selectedFile) {
-      const generatedUrl = await createUrlApi(selectedFile);
-      onUserUploadUrlChange(generatedUrl);
+    try {
+      if (selectedFile) {
+        setIsLoading(true);
+        const generatedUrl = await assemblyGenerateUrl(selectedFile);
+        onUserUploadUrlChange(generatedUrl);
+      }
+    } catch (error) {
+      console.error("Error uploading file:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -30,6 +35,7 @@ export default function UserAudioUpload({
       />
       {selectedFile && <p>Selected File: {selectedFile.name}</p>}
       <button onClick={handleUserInput}>Upload</button>
+      {isLoading && <p>Processing...</p>}
     </div>
   );
 }

@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getRecaps, postRecap, deleteRecapDetail } from "../api/Api";
-
+import { useParams } from "react-router-dom";
 import styles from "../styles/RecapsNav.module.css";
 
 export default function RecapsNav() {
+  const { recapId } = useParams();
   const [recaps, setRecaps] = useState([]);
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
+  const [title, setTitle] = useState();
+  const [description, setDescription] = useState();
 
   console.log(recaps);
 
@@ -19,19 +20,21 @@ export default function RecapsNav() {
     fetchRecaps();
   }, []);
 
-  useEffect(() => {
-    setTitle("");
-    setDescription("");
-  }, [recaps]);
-
   const handleNewRecap = async (e) => {
     e.preventDefault();
     const data = await postRecap(title, description);
     setRecaps([...recaps, data]);
+    setTitle("");
+    setDescription("");
   };
 
   const handleDeleteRecap = async (recapId) => {
     await deleteRecapDetail(recapId);
+    const newRecaps = recaps.filter((recap) => recap.id !== recapId);
+    setRecaps(newRecaps);
+  };
+  const handleSaveRecap = (recapId) => {
+    console.log(recapId);
   };
 
   return (
@@ -44,6 +47,7 @@ export default function RecapsNav() {
               <input
                 id="title"
                 type="text"
+                value={title}
                 onChange={(e) => {
                   setTitle(e.target.value);
                 }}
@@ -54,6 +58,7 @@ export default function RecapsNav() {
               <input
                 id="description"
                 type="text"
+                value={description}
                 onChange={(e) => {
                   setDescription(e.target.value);
                 }}

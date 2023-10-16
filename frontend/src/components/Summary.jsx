@@ -5,22 +5,14 @@ import styles from "../styles/Summary.module.css";
 
 export default function Summary({ summary }) {
   const { recapId } = useParams();
-  const [text, setText] = useState(summary || "No Summary");
+  const [text, setText] = useState();
 
   useEffect(() => {
     const handleInitialData = async () => {
-      try {
-        const summaryData = await getSummary(recapId);
-        setText(summaryData.content || "No Summary");
-      } catch (error) {
-        console.error("Error fetching summary:", error);
-      }
+      const summaryData = await getSummary(recapId);
+      setText(summaryData.content);
     };
-    if (!summary) {
-      handleInitialData();
-    } else {
-      setText(summary);
-    }
+    handleInitialData();
   }, [recapId, summary]);
 
   return (

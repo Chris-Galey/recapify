@@ -5,7 +5,7 @@ import UserInput from "../components/UserInput";
 import Customize from "../components/Customize";
 import Transcript from "../components/Transcript";
 import Summary from "../components/Summary";
-import { transcriptResultApi } from "../api/AssemblyApi";
+import { assemblyGenerateTranscript } from "../api/Api";
 import styles from "../styles/RecapDetail.module.css";
 
 export default function RecapDetail() {
@@ -14,7 +14,9 @@ export default function RecapDetail() {
   const [url, setUrl] = useState("");
   const [data, setData] = useState([]);
   const [customState, setCustomState] = useState({});
-  console.log(customState);
+  const [isLoading, setIsLoading] = useState(false);
+  const [attempted, setAttempted] = useState(false);
+
   useEffect(() => {
     const handleRecap = async () => {
       const data = await getRecapDetail(recapId);
@@ -31,20 +33,25 @@ export default function RecapDetail() {
   };
 
   const handleUserRecap = async () => {
-    if (!url) {
-      alert("Please upload a file");
-      return;
+    try {
+      if (!url) {
+        alert("Please upload a file or enter a URL");
+        return;
+      }
+      setIsLoading(true);
+      const data = await assemblyGenerateTranscript(url, customState);
+      setData(data);
+      setAttempted(true);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
     }
-
-    const data = await transcriptResultApi(url, customState);
-    console.log(data);
-    setData(data);
   };
 
   const handleSaveRecap = async () => {
-    const updateTranscriptResponse = await updateTranscript(recapId, data.text);
-    const updateSummaryResponse = await updateSummary(recapId, data.summary);
-    console.log(updateTranscriptResponse, updateSummaryResponse);
+    await updateTranscript(recapId, data.text);
+    await updateSummary(recapId, data.summary);
   };
 
   return (
@@ -61,8 +68,8 @@ export default function RecapDetail() {
       </div>
       <div>
         <button onClick={handleUserRecap}>Recapify!</button>
-        <button onClick={handleSaveRecap}>Save Recap</button>
-        <p>Status: {data.status}</p>
+        {attempted && <button onClick={handleSaveRecap}>Save Recap</button>}
+        {isLoading && <p>Loading...</p>}
       </div>
     </div>
   );

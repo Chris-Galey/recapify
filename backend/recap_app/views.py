@@ -1,9 +1,17 @@
-from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, UpdateAPIView, DestroyAPIView, RetrieveAPIView
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, UpdateAPIView, RetrieveAPIView
+from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework import status
 from .models import Recap, RecapSummary, RecapTranscript
 from .serializers import RecapSerializer, RecapSummarySerializer, RecapTranscriptSerializer
+import requests
+import json
+import time
+# import assemblyai as aai
+
+# aai.settings.api_key = f"72a3bd6a64304298b16f08870cf96698"
+
 
 
 
@@ -140,56 +148,64 @@ class RecapTranscriptView(RetrieveAPIView, UpdateAPIView):
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
+    
+    # ASSEMBLYAI API
+base_url = "https://api.assemblyai.com/v2"
+
+headers = {
+    "authorization": "72a3bd6a64304298b16f08870cf96698" 
+}   
+
+class AssemblyGenerateUrlView(APIView):
+    permission_classes = [AllowAny]
+    
+    def post(self, request):
+        file = request.data['audio']
+        response = requests.post(base_url + "/upload",
+                          headers=headers,
+                          data=file)
+
+        upload_url = response.json()["upload_url"]
+        return Response(upload_url)
+
+class AssemblyGenerateTranscriptView(APIView):
+    permission_classes = [AllowAny]
+    
+    def post(self, request):
         
-    # def delete(self, request, recap_id=None):
-    #     transcripts = RecapTranscript.objects.filter(recap=recap_id)
-    #     transcripts.delete()
-    #     return Response(status=status.HTTP_204_NO_CONTENT)
-    
-    
-
-    
-# class RecapSummaryDetailView(RetrieveUpdateDestroyAPIView):
-#     queryset = RecapSummary.objects.all()
-#     serializer_class = RecapSummarySerializer
-#     permission_classes = [AllowAny]
-    
-
-#     def retrieve(self, request, recap_id=None, summary_id=None):
-#         summary = RecapSummary.objects.get(recap=recap_id, id=summary_id)
-#         serializer = RecapSummarySerializer(summary)
-#         return Response(serializer.data)
-
-
-    # def update(self, request, recap_id=None, summary_id=None):
-    #     summary = RecapSummary.objects.get(recap=recap_id, id=summary_id)
-    #     serializer = RecapSummarySerializer(summary, data=request.data, partial=True)
-    #     if serializer.is_valid():
-    #         serializer.save()
-    #         return Response(serializer.data)
-
-
-#     def delete(self, request, recap_id=None, summary_id=None):
-#         summary = RecapSummary.objects.get(recap=recap_id, id=summary_id)
-#         summary.delete()
-#         return Response(status=status.HTTP_204_NO_CONTENT)
-
-
-
-# class MeetingTranscriptDetailView(RetrieveDestroyAPIView):
-#     queryset = MeetingTranscript.objects.all()
-#     serializer_class = MeetingTranscriptSerializer
-#     permission_classes = [AllowAny]
-    
-#     def retrieve(self, request, meeting_id=None, transcript_id=None):
-#         transcript = MeetingTranscript.objects.get(meeting=meeting_id, id=transcript_id)
-#         serializer = MeetingTranscriptSerializer(transcript)
-#         return Response(serializer.data)
-       
         
-#     def destroy(self, request, meeting_id=None, transcript_id=None):
-#         transcript = MeetingTranscript.objects.get(meeting=meeting_id, id=transcript_id)
-#         transcript.delete()
-#         return Response(status=status.HTTP_204_NO_CONTENT)
+        
+        audio_url = request.data['url']
+        custom_state = request.data['customState']
+        data = {
+    "audio_url": audio_url,
+    "summarization": custom_state['summarization'],
+    "summary_model": custom_state['summary_model'],
+     "summary_type": custom_state['summary_type'],
+     "entity_detection": custom_state['entity_detection'],
+}
+    
+        url = base_url + "/transcript"
+        response = requests.post(url, json=data, headers=headers)
+        transcript_id = response.json()['id']
+        polling_endpoint = f"https://api.assemblyai.com/v2/transcript/{transcript_id}"
+        transcription_result = requests.get(polling_endpoint, headers=headers).json()
+        
+        
+        while True:
+            transcription_result = requests.get(polling_endpoint, headers=headers).json()
+
+            if transcription_result['status'] == 'completed':
+                return Response(transcription_result)
+                
+
+            elif transcription_result['status'] == 'error':
+                raise RuntimeError(f"Transcription failed: {transcription_result['error']}")
+
+            else:
+                time.sleep(3)
+    
+    
+
         
         

@@ -10,7 +10,7 @@ export default function UserInput({ onUrlChange }) {
   const [userUploadUrl, setUserUploadUrl] = useState("");
   const [audioOption, setAudioOption] = useState("url");
   const [currentUrl, setCurrentUrl] = useState("");
-
+  console.log(userUploadUrl);
   const onUserUrlChange = (newUrl) => {
     setUserUrl(newUrl);
   };
@@ -59,10 +59,7 @@ export default function UserInput({ onUrlChange }) {
         {audioOption == "url" ? (
           <UserUrl userUrl={userUrl} onUserUrlChange={onUserUrlChange} />
         ) : (
-          <UserUpload
-            userUploadUrl={userUploadUrl}
-            onUserUploadUrlChange={onUserUploadUrlChange}
-          />
+          <UserUpload onUserUploadUrlChange={onUserUploadUrlChange} />
         )}
       </div>
     </div>
