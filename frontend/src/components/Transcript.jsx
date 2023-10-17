@@ -5,28 +5,24 @@ import styles from "../styles/Transcript.module.css";
 
 export default function Transcript({ transcript }) {
   const { recapId } = useParams();
-  const [text, setText] = useState(transcript || "No Transcript");
+  const [text, setText] = useState([]);
 
   useEffect(() => {
-    const fetchTranscript = async () => {
-      try {
-        const transcriptData = await getTranscript(recapId);
-        setText(transcriptData.raw_transcript || "No Transcript");
-      } catch (error) {
-        console.error("Error fetching transcript:", error);
-      }
-    };
-    if (!transcript) {
-      fetchTranscript();
-    } else {
+    if (transcript) {
       setText(transcript);
+    } else {
+      const fetchTranscript = async () => {
+        const data = await getTranscript(recapId);
+        setText(data.raw_transcript || "No Transcript");
+      };
+      fetchTranscript();
     }
   }, [recapId, transcript]);
 
   return (
     <div className={styles.wrapper}>
       <h1>Transcript</h1>
-      <p>{text ? text : "No Transcript"}</p>
+      <p>{text}</p>
     </div>
   );
 }

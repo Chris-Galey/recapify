@@ -4,6 +4,9 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Root from "./routes/Root";
 import Home from "./routes/Home";
 import Recaps from "./routes/Recaps";
+import Dashboard from "./routes/Dashboard";
+import Login from "./auth/Login";
+import Signup from "./auth/Signup";
 import RecapDetail from "./routes/RecapDetail";
 import ErrorPage from "./errors/error-page";
 import "./styles/index.css";
@@ -22,23 +25,22 @@ const router = createBrowserRouter([
           {
             path: ":recapId",
             element: <RecapDetail />,
-            // children: [
-            //   {
-            //     path: "summaries",
-            //     element: <Summaries />,
-            //   },
-            //   { path: "transcript", element: <Transcript /> },
-            // ],
           },
         ],
       },
       {
-        path: "login",
-        element: <h1>Login</h1>,
-      },
-      {
-        path: "signup",
-        element: <h1>Signup</h1>,
+        path: "dashboard",
+        element: <Dashboard />,
+        children: [
+          {
+            path: "login",
+            element: <Login />,
+          },
+          {
+            path: "signup",
+            element: <Signup />,
+          },
+        ],
       },
     ],
   },

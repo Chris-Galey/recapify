@@ -22,13 +22,13 @@ class RecapView(ListCreateAPIView):
     
 
     def list(self, request):
-        queryset = self.get_queryset()
+        queryset = Recap.objects.filter(user=request.user.id)
         serializer = RecapSerializer(queryset, many=True)
         return Response(serializer.data)
     
 
     def create(self, request):
-        serializer = RecapSerializer(data=request.data)
+        serializer = RecapSerializer(context={"user_id": request.user.id}, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)

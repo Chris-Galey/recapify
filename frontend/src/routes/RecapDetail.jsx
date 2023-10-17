@@ -15,12 +15,13 @@ export default function RecapDetail() {
   const [data, setData] = useState([]);
   const [customState, setCustomState] = useState({});
   const [isLoading, setIsLoading] = useState(false);
-  const [attempted, setAttempted] = useState(false);
 
   useEffect(() => {
     const handleRecap = async () => {
       const data = await getRecapDetail(recapId);
       setRecap(data);
+      setUrl("");
+      setData([]);
     };
     handleRecap();
   }, [recapId]);
@@ -40,18 +41,14 @@ export default function RecapDetail() {
       }
       setIsLoading(true);
       const data = await assemblyGenerateTranscript(url, customState);
+      await updateTranscript(recapId, data.text);
+      await updateSummary(recapId, data.summary);
       setData(data);
-      setAttempted(true);
     } catch (error) {
       console.log(error);
     } finally {
       setIsLoading(false);
     }
-  };
-
-  const handleSaveRecap = async () => {
-    await updateTranscript(recapId, data.text);
-    await updateSummary(recapId, data.summary);
   };
 
   return (
@@ -68,7 +65,6 @@ export default function RecapDetail() {
       </div>
       <div>
         <button onClick={handleUserRecap}>Recapify!</button>
-        {attempted && <button onClick={handleSaveRecap}>Save Recap</button>}
         {isLoading && <p>Loading...</p>}
       </div>
     </div>

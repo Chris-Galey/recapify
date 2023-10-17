@@ -2,7 +2,7 @@ import { useState } from "react";
 import { assemblyGenerateUrl } from "../api/Api";
 
 export default function UserAudioUpload({ onUserUploadUrlChange }) {
-  const [selectedFile, setSelectedFile] = useState("");
+  const [selectedFile, setSelectedFile] = useState();
   const [isLoading, setIsLoading] = useState(false);
 
   const handleFileChange = (e) => {
@@ -22,6 +22,7 @@ export default function UserAudioUpload({ onUserUploadUrlChange }) {
       console.error("Error uploading file:", error);
     } finally {
       setIsLoading(false);
+      setSelectedFile(null);
     }
   };
 
@@ -33,7 +34,6 @@ export default function UserAudioUpload({ onUserUploadUrlChange }) {
         id="file"
         onChange={handleFileChange}
       />
-      {selectedFile && <p>Selected File: {selectedFile.name}</p>}
       <button onClick={handleUserInput}>Upload</button>
       {isLoading && <p>Processing...</p>}
     </div>

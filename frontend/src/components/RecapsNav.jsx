@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { getRecaps, postRecap, deleteRecapDetail } from "../api/Api";
-import { useParams } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import styles from "../styles/RecapsNav.module.css";
 
 export default function RecapsNav() {
   const { recapId } = useParams();
+  const navigate = useNavigate();
   const [recaps, setRecaps] = useState([]);
   const [title, setTitle] = useState();
   const [description, setDescription] = useState();
@@ -26,15 +26,14 @@ export default function RecapsNav() {
     setRecaps([...recaps, data]);
     setTitle("");
     setDescription("");
+    navigate(`/recaps/${data.id}`);
   };
 
   const handleDeleteRecap = async (recapId) => {
     await deleteRecapDetail(recapId);
     const newRecaps = recaps.filter((recap) => recap.id !== recapId);
     setRecaps(newRecaps);
-  };
-  const handleSaveRecap = (recapId) => {
-    console.log(recapId);
+    navigate("/recaps");
   };
 
   return (
