@@ -2,8 +2,9 @@ import { useContext } from "react";
 import { Link } from "react-router-dom";
 import styles from "../styles/RootHeader.module.css";
 import { AuthContext } from "../context/AuthContext";
-
+import { useNavigate } from "react-router-dom";
 export default function RootHeader() {
+  const navigate = useNavigate();
   const { sharedState } = useContext(AuthContext);
 
   const handleLogout = () => {
@@ -12,8 +13,9 @@ export default function RootHeader() {
     sharedState.setAuthToken("");
     sharedState.setSignedup(false);
     localStorage.removeItem("token");
+    navigate("/dashboard/login");
   };
-
+  console.log(sharedState);
   return (
     <header className={styles.root_header}>
       <h1>Recapify</h1>
@@ -23,27 +25,26 @@ export default function RootHeader() {
           <li>
             <Link to="/">Home</Link>
           </li>
-          {sharedState.authStatus
-            ? (
-                <li>
-                  <Link to="/recaps">Recaps</Link>
-                </li>
-              ) && (
-                <li>
-                  <Link onClick={handleLogout}>Logout</Link>
-                </li>
-              )
-            : null}
-
-          {sharedState.signedup ? (
+          {sharedState.authStatus ? (
             <li>
-              <Link to="/dashboard/login">Login</Link>
+              <Link to="/recaps">Recaps</Link>
             </li>
           ) : (
             <li>
-              <Link to="/dashboard/signup">Signup</Link>
+              <Link to="/dashboard/login">Login</Link>
             </li>
           )}
+
+          {!sharedState.signedup ? (
+            <li>
+              <Link to="/dashboard/signup">Signup</Link>
+            </li>
+          ) : null}
+          {sharedState.authStatus ? (
+            <li>
+              <Link onClick={handleLogout}>Logout</Link>
+            </li>
+          ) : null}
         </ul>
       </nav>
     </header>

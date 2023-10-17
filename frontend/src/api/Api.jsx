@@ -1,8 +1,29 @@
 const token = localStorage.getItem("token");
 const header = {
   "Content-Type": "application/json",
-  Authorization: `Token ${token}`,
-}; // Recap
+  Authorization: `token ${token}`,
+};
+// Auth
+export const signup = async (username, password) => {
+  const data = await fetch("http://127.0.0.1:8000/dashboard/signup", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ username, password }),
+  });
+  const res = await data.json();
+  return res;
+};
+export const login = async (username, password) => {
+  const data = await fetch("http://127.0.0.1:8000/dashboard/login", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ username, password }),
+  });
+  const res = await data.json();
+  return res;
+};
+
+// Recap
 export const getRecaps = async () => {
   const data = await fetch("http://127.0.0.1:8000/recaps/", {
     method: "GET",

@@ -8,10 +8,12 @@ class UserSerializer(serializers.ModelSerializer):
         fields = 'id'
         
 class RecapSerializer(serializers.ModelSerializer):
-    user = UserSerializer(read_only=True)
+    user = serializers.PrimaryKeyRelatedField(many=False, read_only=True)
+    
     class Meta:
         model = Recap
-        fields = '__all__'
+        fields = ('user','title', 'description', 'created_at') 
+    
     
 class RecapSummarySerializer(serializers.ModelSerializer):
     class Meta:

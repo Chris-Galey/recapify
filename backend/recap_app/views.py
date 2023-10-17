@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from .models import Recap, RecapSummary, RecapTranscript
 from .serializers import RecapSerializer, RecapSummarySerializer, RecapTranscriptSerializer
+from django.contrib.auth.models import User
 import requests
 import json
 import time
@@ -22,18 +23,16 @@ class RecapView(ListCreateAPIView):
     
 
     def list(self, request):
-        queryset = Recap.objects.filter(user=request.user.id)
-        serializer = RecapSerializer(queryset, many=True)
+        recaps = Recap.objects.filter(user=self.request.user)
+        serializer = RecapSerializer(recaps, many=True)
         return Response(serializer.data)
-    
 
     def create(self, request):
-        serializer = RecapSerializer(context={"user_id": request.user.id}, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors)
-    
+        print(request.user)
+        serializer = RecapSerializer(data=request.data, context={'request': request})
+        
+        
+
 
 class RecapDetailView(RetrieveUpdateDestroyAPIView):
     serializer_class = RecapSerializer

@@ -1,27 +1,24 @@
 import { useState, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
-
+import { useNavigate } from "react-router-dom";
+import { login } from "../api/Api";
 export default function Login() {
+  const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const { sharedState } = useContext(AuthContext);
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    const response = await fetch("http://127.0.0.1:8000/dashboard/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, password }),
-    });
-    const data = await response.json();
-
+    const data = await login(username, password);
     localStorage.setItem("token", data.token);
-    console.log(data.token);
+    console.log(data);
     setPassword("");
     setUsername("");
     sharedState.setAuthStatus(true);
     sharedState.setAuthToken(data.token);
     sharedState.setUsername(username);
+    sharedState.setSignedup(true);
   };
   return (
     <form onSubmit={handleFormSubmit}>

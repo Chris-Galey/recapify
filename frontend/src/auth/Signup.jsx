@@ -1,6 +1,7 @@
 import { useState, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { signup } from "../api/Api";
 
 export default function Signup() {
   const navigate = useNavigate();
@@ -10,13 +11,8 @@ export default function Signup() {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    const response = await fetch("http://127.0.0.1:8000/dashboard/signup", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, password }),
-    });
-    const data = await response.json();
-    console.log(data);
+    const data = await signup(username, password);
+
     console.log(`${data.username} has been created!`);
     setUsername("");
     setPassword("");
