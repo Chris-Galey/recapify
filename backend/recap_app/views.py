@@ -1,6 +1,6 @@
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, UpdateAPIView, RetrieveAPIView
 from rest_framework.views import APIView
-from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.permissions import IsAuthenticated, AllowAny, IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 from rest_framework import status
 from .models import Recap, RecapSummary, RecapTranscript
@@ -19,27 +19,20 @@ import time
 class RecapView(ListCreateAPIView):
     queryset = Recap.objects.all()
     serializer_class = RecapSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
     
 
     def list(self, request):
-        user = self.request.user.id
-        recaps = Recap.objects.filter(user=user)
+        recaps = Recap.objects.filter(user=self.request.user)
         serializer = RecapSerializer(recaps, many=True)
         return Response(serializer.data)
 
-
     def create(self, request):
-        data = request.data
-        data['user'] = self.request.user.id
-        serializer = RecapSerializer(data=data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        print(request.user)
+        serializer = RecapSerializer(data=request.data, context={'request': request})
         
         
-        
-
+    
 
 class RecapDetailView(RetrieveUpdateDestroyAPIView):
     serializer_class = RecapSerializer

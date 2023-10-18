@@ -6,14 +6,16 @@ from .models import Recap, RecapSummary, RecapTranscript, User
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = 'id'
+        fields = ['username']
         
 class RecapSerializer(serializers.ModelSerializer):
+    user = serializers.PrimaryKeyRelatedField(many=False, read_only=True)
     
     class Meta:
         model = Recap
-        fields = '__all__'
-
+        fields = ('user','title', 'description', 'created_at') 
+    
+    
 class RecapSummarySerializer(serializers.ModelSerializer):
     class Meta:
         model = RecapSummary
