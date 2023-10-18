@@ -5,15 +5,21 @@ from .models import Recap, RecapSummary, RecapTranscript, User
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = 'id'
+        fields = ['username']
         
 class RecapSerializer(serializers.ModelSerializer):
-    user = serializers.PrimaryKeyRelatedField(many=False, read_only=True)
-    
+    user = UserSerializer(read_only=True)
     class Meta:
         model = Recap
-        fields = ('user','title', 'description', 'created_at') 
+        fields = '__all__'
     
+    def create(self, validated_data):
+        user = self.context['request'].user
+        print(user)
+        recap = Recap.objects.create(user=user, **validated_data)
+        return recap
+
+        
     
 class RecapSummarySerializer(serializers.ModelSerializer):
     class Meta:
