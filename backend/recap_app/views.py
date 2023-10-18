@@ -19,17 +19,24 @@ import time
 class RecapView(ListCreateAPIView):
     queryset = Recap.objects.all()
     serializer_class = RecapSerializer
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
     
 
     def list(self, request):
-        recaps = Recap.objects.filter(user=self.request.user)
+        user = self.request.user.id
+        recaps = Recap.objects.filter(user=user)
         serializer = RecapSerializer(recaps, many=True)
         return Response(serializer.data)
 
+
     def create(self, request):
-        print(request.user)
-        serializer = RecapSerializer(data=request.data, context={'request': request})
+        data = request.data
+        data['user'] = self.request.user.id
+        serializer = RecapSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        
         
         
 
