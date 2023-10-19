@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
 import { getRecaps, postRecap, deleteRecapDetail } from "../api/Api";
-import { useParams, Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styles from "../styles/RecapsNav.module.css";
 
 export default function RecapsNav() {
-  const { recapId } = useParams();
   const navigate = useNavigate();
   const [recaps, setRecaps] = useState([]);
   const [title, setTitle] = useState();

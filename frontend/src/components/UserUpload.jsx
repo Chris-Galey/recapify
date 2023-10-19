@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { assemblyGenerateUrl } from "../api/Api";
 
 export default function UserAudioUpload({ onUserUploadUrlChange }) {
   const [selectedFile, setSelectedFile] = useState();
   const [isLoading, setIsLoading] = useState(false);
-  console.log(selectedFile);
+  const fileRef = useRef();
   const handleFileChange = (e) => {
     e.stopPropagation();
     const file = e.target.files[0];
@@ -18,6 +18,7 @@ export default function UserAudioUpload({ onUserUploadUrlChange }) {
         setIsLoading(true);
         const generatedUrl = await assemblyGenerateUrl(selectedFile);
         onUserUploadUrlChange(generatedUrl);
+        fileRef.current.value = null;
       }
     } catch (error) {
       console.error("Error uploading file:", error);
@@ -26,7 +27,9 @@ export default function UserAudioUpload({ onUserUploadUrlChange }) {
       setSelectedFile(null);
     }
   };
-
+  // const handleReset = () => {
+  //   fileRef.current.value = null;
+  // };
   return (
     <div>
       <form onSubmit={handleFormSubmit} encType="multipart/form-data">
@@ -35,8 +38,12 @@ export default function UserAudioUpload({ onUserUploadUrlChange }) {
           name="audio"
           accept=".mp3, .wav, .ogg"
           onChange={handleFileChange}
+          ref={fileRef}
         />
         <button type="submit">Upload</button>
+        {/* <button type="button" onClick={handleReset}>
+          Reset
+        </button> */}
       </form>
       {isLoading && <p>Processing...</p>}
     </div>

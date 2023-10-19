@@ -1,10 +1,12 @@
 import { useState, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { login } from "../api/Api";
+import { useNavigate } from "react-router-dom";
 export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const { sharedState } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
@@ -17,6 +19,7 @@ export default function Login() {
     sharedState.setAuthToken(data.token);
     sharedState.setUsername(username);
     sharedState.setSignedup(true);
+    navigate("/recaps");
   };
   return (
     <form onSubmit={handleFormSubmit}>
@@ -31,7 +34,7 @@ export default function Login() {
       />
       <label htmlFor="loginPassword">Password:</label>
       <input
-        type="text"
+        type="password"
         id="loginPassword"
         onChange={(e) => {
           setPassword(e.target.value);

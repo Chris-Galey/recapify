@@ -1,6 +1,5 @@
 const getToken = () => {
   const tokenString = localStorage.getItem("token");
-  console.log(tokenString);
   const header = {
     "Content-Type": "application/json",
     Authorization: `token ${tokenString}`,
@@ -9,7 +8,6 @@ const getToken = () => {
 };
 const getTokenAlternative = () => {
   const tokenString = localStorage.getItem("token");
-  console.log(tokenString);
   const header = {
     Authorization: `Token ${tokenString}`,
   };
