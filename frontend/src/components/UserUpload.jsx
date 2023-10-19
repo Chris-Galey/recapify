@@ -4,14 +4,15 @@ import { assemblyGenerateUrl } from "../api/Api";
 export default function UserAudioUpload({ onUserUploadUrlChange }) {
   const [selectedFile, setSelectedFile] = useState();
   const [isLoading, setIsLoading] = useState(false);
-
+  console.log(selectedFile);
   const handleFileChange = (e) => {
-    e.preventDefault();
+    e.stopPropagation();
     const file = e.target.files[0];
     setSelectedFile(file);
   };
 
-  const handleUserInput = async () => {
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
     try {
       if (selectedFile) {
         setIsLoading(true);
@@ -28,13 +29,15 @@ export default function UserAudioUpload({ onUserUploadUrlChange }) {
 
   return (
     <div>
-      <input
-        type="file"
-        accept=".mp3,.wav,.ogg"
-        id="file"
-        onChange={handleFileChange}
-      />
-      <button onClick={handleUserInput}>Upload</button>
+      <form onSubmit={handleFormSubmit} encType="multipart/form-data">
+        <input
+          type="file"
+          name="audio"
+          accept=".mp3, .wav, .ogg"
+          onChange={handleFileChange}
+        />
+        <button type="submit">Upload</button>
+      </form>
       {isLoading && <p>Processing...</p>}
     </div>
   );

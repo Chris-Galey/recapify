@@ -1,8 +1,21 @@
-const token = localStorage.getItem("token");
-const header = {
-  "Content-Type": "application/json",
-  Authorization: `token ${token}`,
+const getToken = () => {
+  const tokenString = localStorage.getItem("token");
+  console.log(tokenString);
+  const header = {
+    "Content-Type": "application/json",
+    Authorization: `token ${tokenString}`,
+  };
+  return header;
 };
+const getTokenAlternative = () => {
+  const tokenString = localStorage.getItem("token");
+  console.log(tokenString);
+  const header = {
+    Authorization: `Token ${tokenString}`,
+  };
+  return header;
+};
+
 // Auth
 export const signup = async (username, password) => {
   const data = await fetch("http://127.0.0.1:8000/dashboard/signup", {
@@ -25,6 +38,7 @@ export const login = async (username, password) => {
 
 // Recap
 export const getRecaps = async () => {
+  const header = getToken();
   const data = await fetch("http://127.0.0.1:8000/recaps/", {
     method: "GET",
     headers: header,
@@ -34,6 +48,7 @@ export const getRecaps = async () => {
 };
 
 export const postRecap = async (title, description) => {
+  const header = getToken();
   const data = await fetch("http://127.0.0.1:8000/recaps/", {
     method: "POST",
     headers: header,
@@ -45,6 +60,7 @@ export const postRecap = async (title, description) => {
 
 // Recap Detail
 export const getRecapDetail = async (recapId) => {
+  const header = getToken();
   const data = await fetch(`http://127.0.0.1:8000/recaps/${recapId}/`, {
     method: "GET",
     headers: header,
@@ -54,6 +70,7 @@ export const getRecapDetail = async (recapId) => {
 };
 
 export const updateRecapDetail = async (recapId, title, description) => {
+  const header = getToken();
   const data = await fetch(`http://127.0.0.1:8000/recaps/${recapId}/`, {
     method: "PUT",
     headers: header,
@@ -64,6 +81,7 @@ export const updateRecapDetail = async (recapId, title, description) => {
 };
 
 export const deleteRecapDetail = async (recapId) => {
+  const header = getToken();
   const response = await fetch(`http://127.0.0.1:8000/recaps/${recapId}/`, {
     method: "DELETE",
     headers: header,
@@ -73,6 +91,7 @@ export const deleteRecapDetail = async (recapId) => {
 
 // Transcript
 export const getTranscript = async (recapId) => {
+  const header = getToken();
   const data = await fetch(
     `http://127.0.0.1:8000/recaps/${recapId}/transcript/`,
     {
@@ -88,6 +107,7 @@ export const getTranscript = async (recapId) => {
 };
 
 export const updateTranscript = async (recapId, raw_transcript) => {
+  const header = getToken();
   const data = await fetch(
     `http://127.0.0.1:8000/recaps/${recapId}/transcript/`,
     {
@@ -103,6 +123,7 @@ export const updateTranscript = async (recapId, raw_transcript) => {
 // Summary
 
 export const getSummary = async (recapId) => {
+  const header = getToken();
   const data = await fetch(`http://127.0.0.1:8000/recaps/${recapId}/summary/`, {
     method: "GET",
     headers: header,
@@ -115,6 +136,7 @@ export const getSummary = async (recapId) => {
 };
 
 export const updateSummary = async (recapId, content) => {
+  const header = getToken();
   const data = await fetch(`http://127.0.0.1:8000/recaps/${recapId}/summary/`, {
     method: "PUT",
     headers: header,
@@ -127,19 +149,21 @@ export const updateSummary = async (recapId, content) => {
 // Assembly API
 
 export const assemblyGenerateUrl = async (file) => {
+  const header = getTokenAlternative();
   const formData = new FormData();
   formData.append("audio", file);
-  console.log(formData);
   const data = await fetch(`http://127.0.0.1:8000/recaps/generateUrl/`, {
     method: "POST",
-    header: header,
+    headers: header,
     body: formData,
   });
   const res = await data.json();
+  console.log(res);
   return res;
 };
 
 export const assemblyGenerateTranscript = async (url, customState) => {
+  const header = getToken();
   const data = await fetch(`http://127.0.0.1:8000/recaps/generateTranscript/`, {
     method: "POST",
     headers: header,

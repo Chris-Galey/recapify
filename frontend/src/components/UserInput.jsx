@@ -10,7 +10,6 @@ export default function UserInput({ onUrlChange }) {
   const [userUploadUrl, setUserUploadUrl] = useState("");
   const [audioOption, setAudioOption] = useState("url");
   const [currentUrl, setCurrentUrl] = useState("");
-  console.log(userUploadUrl);
   const onUserUrlChange = (newUrl) => {
     setUserUrl(newUrl);
   };
@@ -36,7 +35,7 @@ export default function UserInput({ onUrlChange }) {
   return (
     <div className={styles.wrapper}>
       <div className={styles.header}>
-        <p>Current File: {currentUrl}</p>
+        <p>Current Url:{currentUrl ? currentUrl : null}</p>
       </div>
 
       <div className={styles.select}>
