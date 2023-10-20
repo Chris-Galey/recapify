@@ -13,7 +13,8 @@ const getTokenAlternative = () => {
   };
   return header;
 };
-const baseUrl = import.meta.env.VITE_BASE_URL;
+const baseUrl = import.meta.env.VITE_BASE_API_URL;
+console.log(baseUrl);
 // Auth
 export const signup = async (username, password) => {
   const data = await fetch(`http://${baseUrl}/dashboard/signup`, {
