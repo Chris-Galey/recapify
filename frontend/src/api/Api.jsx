@@ -13,10 +13,10 @@ const getTokenAlternative = () => {
   };
   return header;
 };
-
+const baseUrl = import.meta.env.VITE_BASE_URL;
 // Auth
 export const signup = async (username, password) => {
-  const data = await fetch("http://127.0.0.1:8000/dashboard/signup", {
+  const data = await fetch(`${baseUrl}/dashboard/signup`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ username, password }),
@@ -25,7 +25,7 @@ export const signup = async (username, password) => {
   return res;
 };
 export const login = async (username, password) => {
-  const data = await fetch("http://127.0.0.1:8000/dashboard/login", {
+  const data = await fetch(`${baseUrl}/dashboard/login`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ username, password }),
@@ -37,7 +37,7 @@ export const login = async (username, password) => {
 // Recap
 export const getRecaps = async () => {
   const header = getToken();
-  const data = await fetch("http://127.0.0.1:8000/recaps/", {
+  const data = await fetch(`${baseUrl}/recaps/`, {
     method: "GET",
     headers: header,
   });
@@ -47,7 +47,7 @@ export const getRecaps = async () => {
 
 export const postRecap = async (title, description) => {
   const header = getToken();
-  const data = await fetch("http://127.0.0.1:8000/recaps/", {
+  const data = await fetch(`${baseUrl}/recaps/`, {
     method: "POST",
     headers: header,
     body: JSON.stringify({ title, description }),
@@ -59,7 +59,7 @@ export const postRecap = async (title, description) => {
 // Recap Detail
 export const getRecapDetail = async (recapId) => {
   const header = getToken();
-  const data = await fetch(`http://127.0.0.1:8000/recaps/${recapId}/`, {
+  const data = await fetch(`${baseUrl}/${recapId}/`, {
     method: "GET",
     headers: header,
   });
@@ -69,7 +69,7 @@ export const getRecapDetail = async (recapId) => {
 
 export const updateRecapDetail = async (recapId, title, description) => {
   const header = getToken();
-  const data = await fetch(`http://127.0.0.1:8000/recaps/${recapId}/`, {
+  const data = await fetch(`${baseUrl}/recaps/${recapId}/`, {
     method: "PUT",
     headers: header,
     body: JSON.stringify({ title, description }),
@@ -80,7 +80,7 @@ export const updateRecapDetail = async (recapId, title, description) => {
 
 export const deleteRecapDetail = async (recapId) => {
   const header = getToken();
-  const response = await fetch(`http://127.0.0.1:8000/recaps/${recapId}/`, {
+  const response = await fetch(`${baseUrl}/recaps/${recapId}/`, {
     method: "DELETE",
     headers: header,
   });
@@ -90,13 +90,10 @@ export const deleteRecapDetail = async (recapId) => {
 // Transcript
 export const getTranscript = async (recapId) => {
   const header = getToken();
-  const data = await fetch(
-    `http://127.0.0.1:8000/recaps/${recapId}/transcript/`,
-    {
-      method: "GET",
-      headers: header,
-    }
-  );
+  const data = await fetch(`${baseUrl}/recaps/${recapId}/transcript/`, {
+    method: "GET",
+    headers: header,
+  });
   if (!data.ok) {
     return "No Transcript ";
   }
@@ -106,14 +103,11 @@ export const getTranscript = async (recapId) => {
 
 export const updateTranscript = async (recapId, raw_transcript) => {
   const header = getToken();
-  const data = await fetch(
-    `http://127.0.0.1:8000/recaps/${recapId}/transcript/`,
-    {
-      method: "PUT",
-      headers: header,
-      body: JSON.stringify({ raw_transcript }),
-    }
-  );
+  const data = await fetch(`${baseUrl}/recaps/${recapId}/transcript/`, {
+    method: "PUT",
+    headers: header,
+    body: JSON.stringify({ raw_transcript }),
+  });
   const res = await data.json();
   return res;
 };
@@ -122,7 +116,7 @@ export const updateTranscript = async (recapId, raw_transcript) => {
 
 export const getSummary = async (recapId) => {
   const header = getToken();
-  const data = await fetch(`http://127.0.0.1:8000/recaps/${recapId}/summary/`, {
+  const data = await fetch(`${baseUrl}/recaps/${recapId}/summary/`, {
     method: "GET",
     headers: header,
   });
@@ -135,7 +129,7 @@ export const getSummary = async (recapId) => {
 
 export const updateSummary = async (recapId, content) => {
   const header = getToken();
-  const data = await fetch(`http://127.0.0.1:8000/recaps/${recapId}/summary/`, {
+  const data = await fetch(`${baseUrl}/recaps/${recapId}/summary/`, {
     method: "PUT",
     headers: header,
     body: JSON.stringify({ content }),
@@ -150,7 +144,7 @@ export const assemblyGenerateUrl = async (file) => {
   const header = getTokenAlternative();
   const formData = new FormData();
   formData.append("audio", file);
-  const data = await fetch(`http://127.0.0.1:8000/recaps/generateUrl/`, {
+  const data = await fetch(`${baseUrl}/recaps/generateUrl/`, {
     method: "POST",
     headers: header,
     body: formData,
@@ -162,7 +156,7 @@ export const assemblyGenerateUrl = async (file) => {
 
 export const assemblyGenerateTranscript = async (url, customState) => {
   const header = getToken();
-  const data = await fetch(`http://127.0.0.1:8000/recaps/generateTranscript/`, {
+  const data = await fetch(`${baseUrl}/recaps/generateTranscript/`, {
     method: "POST",
     headers: header,
     body: JSON.stringify({ url, customState }),
