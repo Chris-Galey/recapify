@@ -92,7 +92,7 @@ DATABASES = {
         "USER": os.getenv("DB_USER", "postgres"),
         "PASSWORD": os.getenv("DB_PASS", "postgres"),
         "HOST": "db",  
-        "PORT": 5454, # This is the port on the host machine (which will be mapped to 5432 in the container)
+        "PORT": 5432, # This is the port on the host machine (which will be mapped to 5432 in the container)
     }
 }
 
