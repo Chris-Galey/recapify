@@ -39,44 +39,44 @@ export default function RecapsNav() {
     <>
       <div className={styles.sidebar}>
         <div>
-          <form method="post" onSubmit={handleNewRecap}>
-            <label htmlFor="title">
-              Title:
-              <input
-                id="title"
-                type="text"
-                value={title}
-                onChange={(e) => {
-                  setTitle(e.target.value);
-                }}
-              />
-            </label>
-            <label htmlFor="description">
-              Description:
-              <input
-                id="description"
-                type="text"
-                value={description}
-                onChange={(e) => {
-                  setDescription(e.target.value);
-                }}
-              />
-            </label>
-            <button type="submit">Add</button>
+          <form className={styles.form} method="post" onSubmit={handleNewRecap}>
+            <label htmlFor="title">Title:</label>
+            <input
+              id="title"
+              type="text"
+              value={title}
+              onChange={(e) => {
+                setTitle(e.target.value);
+              }}
+            />
+            <label htmlFor="description">Description:</label>
+            <input
+              id="description"
+              type="text"
+              value={description}
+              onChange={(e) => {
+                setDescription(e.target.value);
+              }}
+            />
+            <div>
+              <button type="submit">Add</button>
+            </div>
           </form>
         </div>
-        <nav>
-          <ul>
+        <nav className={styles.sidebar_nav}>
+          <ul className={styles.sidebar_list}>
             {recaps.map((recap) => {
               return (
-                <li key={recap.id}>
+                <li className={styles.sidebar_item} key={recap.id}>
                   <Link to={`/recaps/${recap.id}`}>
                     <h5>{recap.title}</h5>
                     <p>{recap.description}</p>
                   </Link>
-                  <button onClick={() => handleDeleteRecap(recap.id)}>
-                    Delete
-                  </button>
+                  <div>
+                    <button onClick={() => handleDeleteRecap(recap.id)}>
+                      Delete
+                    </button>
+                  </div>
                 </li>
               );
             })}

@@ -1,11 +1,10 @@
 .root_header {
-  width: 100%;
   height: 10vh;
+  width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 0 20px;
 }
 .root_nav {
   display: flex;
@@ -13,10 +12,12 @@
   justify-content: space-between;
   align-items: center;
 }
-.root_list {
+.nav_list {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   gap: 2rem;
+  list-style: none;
+  text-decoration: none;
 }

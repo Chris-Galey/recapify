@@ -54,11 +54,13 @@ export default function RecapDetail() {
   return (
     <div className={styles.wrapper}>
       <h1>{recap.title}</h1>
-      <UserInput onUrlChange={onUrlChange} />
-      <Customize
-        customState={customState}
-        onCustomStateChange={onCustomStateChange}
-      />
+      <div className={styles.recap_input}>
+        <UserInput onUrlChange={onUrlChange} />
+        <Customize
+          customState={customState}
+          onCustomStateChange={onCustomStateChange}
+        />
+      </div>
       <div className={styles.content}>
         <Transcript transcript={data.text} />
         <Summary summary={data.summary} />

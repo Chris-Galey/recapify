@@ -1,3 +1,8 @@
+import styles from "../styles/Home.module.css";
 export default function Home() {
-  return <h1>Home</h1>;
+  return (
+    <div className={styles.home_wrapper}>
+      <h1>Home</h1>
+    </div>
+  );
 }

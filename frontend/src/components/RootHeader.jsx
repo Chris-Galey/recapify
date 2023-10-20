@@ -21,8 +21,8 @@ export default function RootHeader() {
       <h1>Recapify</h1>
 
       <nav className={styles.root_nav}>
-        <ul className={styles.root_list}>
-          <li>
+        <ul className={styles.nav_list}>
+          <li className={styles.link}>
             <Link to="/">Home</Link>
           </li>
           {sharedState.authStatus ? (
