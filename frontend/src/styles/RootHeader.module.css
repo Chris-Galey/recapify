@@ -6,6 +6,9 @@
   justify-content: space-between;
   align-items: center;
 }
+.logo {
+  font-family: "spectral", serif;
+}
 .root_nav {
   display: flex;
   flex-direction: row;

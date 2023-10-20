@@ -18,7 +18,7 @@ export default function RootHeader() {
   console.log(sharedState);
   return (
     <header className={styles.root_header}>
-      <h1>Recapify</h1>
+      <h2 className={styles.logo}>Recapify</h2>
 
       <nav className={styles.root_nav}>
         <ul className={styles.nav_list}>
