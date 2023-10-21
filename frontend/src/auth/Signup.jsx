@@ -2,6 +2,11 @@ import { useState, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { signup } from "../api/Api";
+import styles from "../styles/Auth.module.css";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+import Link from "@mui/material/Link";
 
 export default function Signup() {
   const navigate = useNavigate();
@@ -12,7 +17,7 @@ export default function Signup() {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     const data = await signup(username, password);
-
+    console.log(data.status);
     console.log(`${data.username} has been created!`);
     setUsername("");
     setPassword("");
@@ -21,25 +26,35 @@ export default function Signup() {
   };
 
   return (
-    <form onSubmit={handleFormSubmit}>
-      <h2>Signup</h2>
-      <label htmlFor="username">Username:</label>
-      <input
-        type="text"
+    <form onSubmit={handleFormSubmit} className={styles.form_wrapper}>
+      <h2>Sign up</h2>
+
+      <TextField
+        required
         id="username"
+        label="Required"
+        placeholder="Username"
         onChange={(e) => {
           setUsername(e.target.value);
         }}
       />
-      <label htmlFor="password">Password:</label>
-      <input
-        type="password"
+      <TextField
+        required
         id="password"
+        label="Required"
+        placeholder="password"
+        type="password"
         onChange={(e) => {
           setPassword(e.target.value);
         }}
       />
-      <button type="submit">Submit</button>
+      <Button type="submit" variant="outlined">
+        Sign Up
+      </Button>
+      <Link href="/dashboard/login" variant="body2">
+        {"Already have an account? Login"}
+      </Link>
+      <CheckCircleOutlineIcon className={styles.check} />
     </form>
   );
 }

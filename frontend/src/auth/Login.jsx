@@ -2,6 +2,12 @@ import { useState, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { login } from "../api/Api";
 import { useNavigate } from "react-router-dom";
+import styles from "../styles/Auth.module.css";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+import Link from "@mui/material/Link";
+
 export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -11,6 +17,7 @@ export default function Login() {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     const data = await login(username, password);
+    console.log(data.status);
     localStorage.setItem("token", data.token);
     console.log(data);
     setPassword("");
@@ -22,25 +29,34 @@ export default function Login() {
     navigate("/recaps");
   };
   return (
-    <form onSubmit={handleFormSubmit}>
-      <h2>Login</h2>
-      <label htmlFor="loginUsername">Username:</label>
-      <input
-        type="text"
-        id="loginUsername"
+    <form onSubmit={handleFormSubmit} className={styles.form_wrapper}>
+      <h2>Sign in</h2>
+
+      <TextField
+        required
+        id="username"
+        label="Username"
         onChange={(e) => {
           setUsername(e.target.value);
         }}
       />
-      <label htmlFor="loginPassword">Password:</label>
-      <input
+      <TextField
+        required
         type="password"
-        id="loginPassword"
+        id="password"
+        label="Password"
+        placeholder="password"
         onChange={(e) => {
           setPassword(e.target.value);
         }}
       />
-      <button type="submit">Submit</button>
+      <Button type="submit" variant="outlined">
+        Login
+      </Button>
+      <Link href="/dashboard/signup" variant="body2">
+        {"Don't have an account? Sign Up"}
+      </Link>
+      <CheckCircleOutlineIcon className={styles.check} />
     </form>
   );
 }

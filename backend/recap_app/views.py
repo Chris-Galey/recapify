@@ -9,6 +9,7 @@ from django.contrib.auth.models import User
 import requests
 import json
 import time
+import os
 # import assemblyai as aai
 # aai.settings.api_key = f"72a3bd6a64304298b16f08870cf96698"
 
@@ -117,7 +118,7 @@ class RecapTranscriptView(RetrieveAPIView, UpdateAPIView):
 base_url = "https://api.assemblyai.com/v2"
 
 headers = {
-    "authorization": "72a3bd6a64304298b16f08870cf96698" 
+    "authorization": os.getenv("MY_API_KEY")
 }   
 
 class AssemblyGenerateUrlView(APIView):

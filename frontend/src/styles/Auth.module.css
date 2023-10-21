@@ -1,0 +1,12 @@
+.form_wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 3rem;
+}
+.check {
+  color: #74d186;
+  width: 5rem;
+  height: 5rem;
+}

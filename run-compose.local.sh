@@ -8,14 +8,12 @@ export DEBUG=True
 export POSTGRES_DB=recapify_db
 export POSTGRES_USER=postgres
 export POSTGRES_PASSWORD=postgres
-export DB_HOST=db
-export DB_PORT=5432
 export MY_API_KEY=$1
 
-docker-compose -f docker-compose.dev.yml up -d --build
+docker-compose -f docker-compose.local.yml up -d --build
 
 # make sure the postgres container is ready, then run migrations
 sleep 10 
 
-docker exec recapify-api-1  python /src/manage.py makemigrations 
-docker exec recapify-api-1  python /src/manage.py migrate
+docker exec backend-api-1  python /src/manage.py makemigrations 
+docker exec backend-api-1  python /src/manage.py migrate

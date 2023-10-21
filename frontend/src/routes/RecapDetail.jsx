@@ -54,7 +54,7 @@ export default function RecapDetail() {
   return (
     <div className={styles.wrapper}>
       <h1>{recap.title}</h1>
-      <div className={styles.recap_input}>
+      <div className={styles.input}>
         <UserInput onUrlChange={onUrlChange} />
         <Customize
           customState={customState}

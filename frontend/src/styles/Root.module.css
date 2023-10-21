@@ -1,5 +1,6 @@
 .main_wrapper {
   height: 100vh;
+  width: 100%;
   display: flex;
   flex-direction: column;
   flex: 10% 90%;

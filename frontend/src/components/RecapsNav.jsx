@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getRecaps, postRecap, deleteRecapDetail } from "../api/Api";
-import { Link, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import styles from "../styles/RecapsNav.module.css";
 
 export default function RecapsNav() {
@@ -68,10 +68,16 @@ export default function RecapsNav() {
             {recaps.map((recap) => {
               return (
                 <li className={styles.sidebar_item} key={recap.id}>
-                  <Link to={`/recaps/${recap.id}`}>
+                  <NavLink
+                    to={`/recaps/${recap.id}`}
+                    className={({ isActive, isPending }) =>
+                      isPending ? "pending" : isActive ? "active" : ""
+                    }
+                  >
                     <h5>{recap.title}</h5>
                     <p>{recap.description}</p>
-                  </Link>
+                  </NavLink>
+
                   <div>
                     <button onClick={() => handleDeleteRecap(recap.id)}>
                       Delete

@@ -20,12 +20,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = os.getenv("SECRET_KEY")
-SECRET_KEY = 'django-insecure-%^ggk%_(2n5q0p79xg^2dm3x&*5cc&c5e^yipan0do*413h5ob'
+
+
+SECRET_KEY = os.getenv("SECRET_KEY") 
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = True if os.getenv("DEBUG") == "True" else False
-DEBUG = True
+DEBUG = True if os.getenv("DEBUG") == "True" else False
 
 ALLOWED_HOSTS = ['*']
 
@@ -87,28 +88,16 @@ WSGI_APPLICATION = 'recapify.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-# DATABASES = {
-#     "default": {
-#         "ENGINE": "django.db.backends.postgresql",
-#         "NAME": os.getenv("DB_NAME", "recapify_db"),
-#         "USER": os.getenv("DB_USER", "postgres"),
-#         "PASSWORD": os.getenv("DB_PASS", "postgres"),
-#         "HOST": "db",  
-#         "PORT": 5432, # This is the port on the host machine (which will be mapped to 5432 in the container)
-#     }
-# }
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "recapify_db",
-        "USER": "postgres",
-        "PASSWORD": "postgres",
-        "HOST": "localhost",  
-        "PORT": 5454, # This is the port on the host machine (which will be mapped to 5432 in the container)
+        "NAME": os.getenv("DB_NAME"),
+        "USER": os.getenv("DB_USER"),
+        "PASSWORD": os.getenv("DB_PASS"),
+        "HOST": "db",  
+        "PORT": 5432,
     }
 }
-
-
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
@@ -149,3 +138,5 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+MY_API_KEY=os.getenv("MY_API_KEY")
