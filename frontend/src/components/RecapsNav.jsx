@@ -70,11 +70,9 @@ export default function RecapsNav() {
                 <li className={styles.sidebar_item} key={recap.id}>
                   <NavLink
                     to={`/recaps/${recap.id}`}
-                    className={({ isActive, isPending }) =>
-                      isPending ? "pending" : isActive ? "active" : ""
-                    }
+                    activeClassName={styles.active}
                   >
-                    <h5>{recap.title}</h5>
+                    <h3>{recap.title}</h3>
                     <p>{recap.description}</p>
                   </NavLink>
 

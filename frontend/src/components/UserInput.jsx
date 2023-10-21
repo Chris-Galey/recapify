@@ -35,12 +35,11 @@ export default function UserInput({ onUrlChange }) {
   return (
     <div className={styles.wrapper}>
       <div className={styles.header}>
-        <p>Current Url:{currentUrl ? currentUrl : null}</p>
+        <h2>Generate Link</h2>
       </div>
-
-      <div className={styles.select}>
-        <label htmlFor="input">
-          Input Type:
+      <div className={styles.content}>
+        <div className={styles.select}>
+          <label htmlFor="input">Input Type:</label>
           <select
             name="input"
             id="input"
@@ -51,16 +50,18 @@ export default function UserInput({ onUrlChange }) {
             <option value="url">URL</option>
             <option value="upload">Upload</option>
           </select>
-        </label>
+        </div>
+
+        <div className={styles.input}>
+          {audioOption == "url" ? (
+            <UserUrl userUrl={userUrl} onUserUrlChange={onUserUrlChange} />
+          ) : (
+            <UserUpload onUserUploadUrlChange={onUserUploadUrlChange} />
+          )}
+        </div>
       </div>
 
-      <div className={styles.input}>
-        {audioOption == "url" ? (
-          <UserUrl userUrl={userUrl} onUserUrlChange={onUserUrlChange} />
-        ) : (
-          <UserUpload onUserUploadUrlChange={onUserUploadUrlChange} />
-        )}
-      </div>
+      <p>Current Url:{currentUrl ? currentUrl : null}</p>
     </div>
   );
 }

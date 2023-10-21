@@ -15,9 +15,11 @@ export default function Customize({ customState, onCustomStateChange }) {
 
   return (
     <div className={styles.wrapper}>
-      <h1>Customize</h1>
+      <div className={styles.custom_header}>
+        <h2>Customize</h2>
+      </div>
 
-      <div className={styles.form}>
+      <div className={styles.custom_form}>
         <div className={styles.form__summarize}>
           <label htmlFor="summary">
             Summary:{" "}
@@ -76,49 +78,22 @@ export default function Customize({ customState, onCustomStateChange }) {
             </select>
           </label>
         </div>
-
-        <label htmlFor="keywords">
-          Key Information:
-          <input
-            type="checkbox"
-            id="keywords"
-            value={customState.entity_detection}
-            onChange={(e) => {
-              onCustomStateChange({
-                ...customState,
-                entity_detection: e.target.checked,
-              });
-            }}
-          />
-        </label>
-        {/* <label htmlFor="sentiment">
-          Sentiment:
-          <input
-            type="checkbox"
-            id="sentiment"
-            value={customState.sentiment}
-            onChange={(e) => {
-              onCustomStateChange({
-                ...customState,
-                sentiment: e.target.checked,
-              });
-            }}
-          />
-        </label> */}
-        {/* <label htmlFor="Label Speakers">
-          Label Speakers:
-          <input
-            type="checkbox"
-            id="Label Speakers"
-            value={customState.labelSpeakers}
-            onChange={(e) => {
-              onCustomStateChange({
-                ...customState,
-                labelSpeakers: e.target.checked,
-              });
-            }}
-          />
-        </label> */}
+        <div className={styles.custom_keyword}>
+          <label htmlFor="keywords">
+            Key Information:
+            <input
+              type="checkbox"
+              id="keywords"
+              value={customState.entity_detection}
+              onChange={(e) => {
+                onCustomStateChange({
+                  ...customState,
+                  entity_detection: e.target.checked,
+                });
+              }}
+            />
+          </label>
+        </div>
       </div>
     </div>
   );

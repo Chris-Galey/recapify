@@ -12,16 +12,14 @@ export default function UserFile({ userUrl, onUserUrlChange }) {
   };
   return (
     <div className={styles.wrapper}>
-      <label htmlFor="id">
-        Enter URL:
-        <input
-          type="text"
-          id="id"
-          value={userUrl}
-          onPaste={handleUrlPaste}
-          onChange={handleUrlChange}
-        />
-      </label>
+      <label htmlFor="id">Enter URL:</label>
+      <input
+        type="text"
+        id="id"
+        value={userUrl}
+        onPaste={handleUrlPaste}
+        onChange={handleUrlChange}
+      />
     </div>
   );
 }
