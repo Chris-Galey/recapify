@@ -1,12 +1,8 @@
 import { useState, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { signup } from "../api/Api";
 import styles from "../styles/Auth.module.css";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
-import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
-import Link from "@mui/material/Link";
 
 export default function Signup() {
   const navigate = useNavigate();
@@ -29,7 +25,7 @@ export default function Signup() {
     <form onSubmit={handleFormSubmit} className={styles.form_wrapper}>
       <h2>Sign up</h2>
 
-      <TextField
+      <input
         required
         id="username"
         label="Required"
@@ -38,7 +34,7 @@ export default function Signup() {
           setUsername(e.target.value);
         }}
       />
-      <TextField
+      <input
         required
         id="password"
         label="Required"
@@ -48,13 +44,10 @@ export default function Signup() {
           setPassword(e.target.value);
         }}
       />
-      <Button type="submit" variant="outlined">
-        Sign Up
-      </Button>
-      <Link href="/dashboard/login" variant="body2">
+      <button type="submit">Sign Up</button>
+      <Link href="/dashboard/login" className={styles.link}>
         {"Already have an account? Login"}
       </Link>
-      <CheckCircleOutlineIcon className={styles.check} />
     </form>
   );
 }

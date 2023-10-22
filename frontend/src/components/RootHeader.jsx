@@ -23,26 +23,36 @@ export default function RootHeader() {
       <nav className={styles.root_nav}>
         <ul className={styles.nav_list}>
           <li className={styles.link}>
-            <Link to="/">Home</Link>
+            <Link to="/" className={styles.link}>
+              Home
+            </Link>
           </li>
           {sharedState.authStatus ? (
             <li>
-              <Link to="/recaps">Recaps</Link>
+              <Link to="/recaps" className={styles.link}>
+                Recaps
+              </Link>
             </li>
           ) : (
             <li>
-              <Link to="/dashboard/login">Login</Link>
+              <Link to="/dashboard/login" className={styles.link}>
+                Login
+              </Link>
             </li>
           )}
 
           {!sharedState.signedup ? (
             <li>
-              <Link to="/dashboard/signup">Signup</Link>
+              <Link to="/dashboard/signup" className={styles.link}>
+                Signup
+              </Link>
             </li>
           ) : null}
           {sharedState.authStatus ? (
             <li>
-              <Link onClick={handleLogout}>Logout</Link>
+              <Link onClick={handleLogout} className={styles.link}>
+                Logout
+              </Link>
             </li>
           ) : null}
         </ul>

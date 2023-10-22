@@ -1,10 +1,12 @@
 import { useState, useRef } from "react";
 import { assemblyGenerateUrl } from "../api/Api";
+import styles from "../styles/UserUpload.module.css";
 
-export default function UserAudioUpload({ onUserUploadUrlChange }) {
+export default function UserUpload({ onUserUploadUrlChange }) {
   const [selectedFile, setSelectedFile] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const fileRef = useRef();
+  console.log(selectedFile, fileRef);
   const handleFileChange = (e) => {
     e.stopPropagation();
     const file = e.target.files[0];
@@ -31,20 +33,32 @@ export default function UserAudioUpload({ onUserUploadUrlChange }) {
   //   fileRef.current.value = null;
   // };
   return (
-    <div>
-      <form onSubmit={handleFormSubmit} encType="multipart/form-data">
-        <input
-          type="file"
-          name="audio"
-          accept=".mp3, .wav, .ogg"
-          onChange={handleFileChange}
-          ref={fileRef}
-        />
-        <button type="submit">Upload</button>
-        {/* <button type="button" onClick={handleReset}>
-          Reset
-        </button> */}
+    <div className={styles.upload_wrapper}>
+      <form
+        onSubmit={handleFormSubmit}
+        encType="multipart/form-data"
+        className={styles.upload_form}
+      >
+        <div className={styles.upload_file}>
+          <label htmlFor="file" className={styles.file_input_container}>
+            Choose File
+            <input
+              id="file"
+              type="file"
+              name="audio"
+              accept=".mp3, .wav, .ogg"
+              onChange={handleFileChange}
+              ref={fileRef}
+              className={styles.file_input}
+            />
+          </label>
+          <button type="submit">Upload</button>
+        </div>
+        <p>
+          Current File: {selectedFile ? selectedFile.name : "No File Selected"}
+        </p>
       </form>
+
       {isLoading && <p>Processing...</p>}
     </div>
   );

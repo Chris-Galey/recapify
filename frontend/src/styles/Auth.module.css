@@ -10,3 +10,7 @@
   width: 5rem;
   height: 5rem;
 }
+.link {
+  text-decoration: none;
+  color: var(--text-color);
+}

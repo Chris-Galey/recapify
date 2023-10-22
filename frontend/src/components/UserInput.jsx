@@ -60,8 +60,9 @@ export default function UserInput({ onUrlChange }) {
           )}
         </div>
       </div>
-
-      <p>Current Url:{currentUrl ? currentUrl : null}</p>
+      <div className={styles.input_generated}>
+        <h4>Generated Link: {currentUrl ? currentUrl : null}</h4>
+      </div>
     </div>
   );
 }

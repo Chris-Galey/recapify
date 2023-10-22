@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import styles from "../styles/Customize.module.css";
+
 export default function Customize({ customState, onCustomStateChange }) {
   const { recapId } = useParams();
   const initialCustomState = {
@@ -21,8 +22,8 @@ export default function Customize({ customState, onCustomStateChange }) {
 
       <div className={styles.custom_form}>
         <div className={styles.form__summarize}>
-          <label htmlFor="summary">
-            Summary:{" "}
+          <div className={styles.form__summarize_check}>
+            <label htmlFor="summary">Summary: </label>
             <input
               type="checkbox"
               id="summary"
@@ -34,65 +35,61 @@ export default function Customize({ customState, onCustomStateChange }) {
                 });
               }}
             />
-          </label>
-          <label htmlFor="summary-type">
-            Type:
-            <select
-              name="summary-type"
-              id="summary-type"
-              value={customState.summary_type}
-              onChange={(e) => {
-                onCustomStateChange({
-                  ...customState,
-                  summary_type: e.target.value,
-                });
-              }}
-            >
-              <option value="bullets" id="bullets">
-                bullets
-              </option>
-              <option value="paragraph" id="paragraph">
-                paragraph
-              </option>
-            </select>
-          </label>
-          <label htmlFor="summary-model">
-            Model:
-            <select
-              name="summary-model"
-              id="summary-model"
-              value={customState.summary_model}
-              onChange={(e) => {
-                onCustomStateChange({
-                  ...customState,
-                  summary_model: e.target.value,
-                });
-              }}
-            >
-              <option value="informative" id="informative">
-                Informative
-              </option>
-              <option value="conversation" id="conversation">
-                Conversational
-              </option>
-            </select>
-          </label>
+          </div>
+
+          <label htmlFor="summary-type">Type:</label>
+          <select
+            name="summary-type"
+            id="summary-type"
+            value={customState.summary_type}
+            onChange={(e) => {
+              onCustomStateChange({
+                ...customState,
+                summary_type: e.target.value,
+              });
+            }}
+          >
+            <option value="bullets" id="bullets">
+              bullets
+            </option>
+            <option value="paragraph" id="paragraph">
+              paragraph
+            </option>
+          </select>
+
+          <label htmlFor="summary-model">Model:</label>
+          <select
+            name="summary-model"
+            id="summary-model"
+            value={customState.summary_model}
+            onChange={(e) => {
+              onCustomStateChange({
+                ...customState,
+                summary_model: e.target.value,
+              });
+            }}
+          >
+            <option value="informative" id="informative">
+              Informative
+            </option>
+            <option value="conversational" id="conversational">
+              Conversational
+            </option>
+          </select>
         </div>
-        <div className={styles.custom_keyword}>
-          <label htmlFor="keywords">
-            Key Information:
-            <input
-              type="checkbox"
-              id="keywords"
-              value={customState.entity_detection}
-              onChange={(e) => {
-                onCustomStateChange({
-                  ...customState,
-                  entity_detection: e.target.checked,
-                });
-              }}
-            />
-          </label>
+        <div className={styles.form_keyword}>
+          <label htmlFor="keywords">Key Information:</label>
+          <input
+            type="checkbox"
+            id="keywords"
+            value={customState.entity_detection}
+            onChange={(e) => {
+              onCustomStateChange({
+                ...customState,
+                entity_detection: e.target.checked,
+              });
+            }}
+          />
         </div>
       </div>
     </div>

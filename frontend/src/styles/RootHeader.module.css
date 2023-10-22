@@ -6,7 +6,7 @@
   justify-content: space-between;
   align-items: center;
   border-bottom: 1.5px solid var(--border-color);
-  padding: 0 3rem;
+  padding: 0 5rem;
 }
 .logo {
   font-family: "Roboto", serif;
@@ -25,4 +25,8 @@
   gap: 2rem;
   list-style: none;
   text-decoration: none;
+}
+.link {
+  text-decoration: none;
+  color: var(--text-color);
 }

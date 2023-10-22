@@ -49,6 +49,7 @@ export default function RecapsNav() {
                 setTitle(e.target.value);
               }}
             />
+
             <label htmlFor="description">Description:</label>
             <input
               id="description"
@@ -58,6 +59,7 @@ export default function RecapsNav() {
                 setDescription(e.target.value);
               }}
             />
+
             <div>
               <button type="submit">Add</button>
             </div>
@@ -68,10 +70,7 @@ export default function RecapsNav() {
             {recaps.map((recap) => {
               return (
                 <li className={styles.sidebar_item} key={recap.id}>
-                  <NavLink
-                    to={`/recaps/${recap.id}`}
-                    activeClassName={styles.active}
-                  >
+                  <NavLink to={`/recaps/${recap.id}`} className={styles.link}>
                     <h3>{recap.title}</h3>
                     <p>{recap.description}</p>
                   </NavLink>

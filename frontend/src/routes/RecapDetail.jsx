@@ -15,13 +15,13 @@ export default function RecapDetail() {
   const [data, setData] = useState([]);
   const [customState, setCustomState] = useState({});
   const [isLoading, setIsLoading] = useState(false);
-
+  console.log(data);
   useEffect(() => {
+    setUrl("");
+    setData([]);
     const handleRecap = async () => {
       const data = await getRecapDetail(recapId);
       setRecap(data);
-      setUrl("");
-      setData([]);
     };
     handleRecap();
   }, [recapId]);
@@ -53,7 +53,6 @@ export default function RecapDetail() {
 
   return (
     <div className={styles.wrapper}>
-      <h1>{recap.title}</h1>
       <div className={styles.input}>
         <UserInput onUrlChange={onUrlChange} />
         <Customize
