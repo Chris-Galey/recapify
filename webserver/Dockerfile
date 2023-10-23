@@ -11,8 +11,8 @@ WORKDIR /frontend
 # These two lines will allow us to pass in an environment
 # variable when the image is *built* (not run).  For local
 # development, localhost; for production, your EC2's IP address
-ARG VITE_BASE_URL=localhost
-ENV VITE_BASE_URL=$VITE_BASE_URL
+ARG VITE_BASE_API_URL=localhost
+ENV VITE_BASE_API_URL=$VITE_BASE_URL
 
 COPY ./frontend/package.json .
 RUN npm install
