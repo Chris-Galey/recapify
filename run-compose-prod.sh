@@ -11,6 +11,7 @@ export POSTGRES_DB=$3
 export POSTGRES_USER=$4
 export POSTGRES_PASSWORD=$5
 export NEW_VERSION=$6
+export MY_API_KEY=$7
 export DB_HOST=db
 export DB_PORT=5432
 
