@@ -15,7 +15,7 @@ export default function RecapDetail() {
   const [data, setData] = useState([]);
   const [customState, setCustomState] = useState({});
   const [isLoading, setIsLoading] = useState(false);
-  console.log(data);
+  console.log(url);
   useEffect(() => {
     setUrl("");
     setData([]);

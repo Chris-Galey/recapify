@@ -5,6 +5,7 @@ import styles from "../styles/UserUpload.module.css";
 export default function UserUpload({ onUserUploadUrlChange }) {
   const [selectedFile, setSelectedFile] = useState();
   const [isLoading, setIsLoading] = useState(false);
+  console.log(selectedFile);
   const fileRef = useRef();
   console.log(selectedFile, fileRef);
   const handleFileChange = (e) => {
