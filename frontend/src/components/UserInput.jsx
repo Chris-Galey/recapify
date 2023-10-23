@@ -35,7 +35,7 @@ export default function UserInput({ onUrlChange }) {
   return (
     <div className={styles.wrapper}>
       <div className={styles.header}>
-        <h2>Generate Link</h2>
+        <h3>Generate Link</h3>
       </div>
       <div className={styles.content}>
         <div className={styles.select}>
@@ -61,7 +61,7 @@ export default function UserInput({ onUrlChange }) {
         </div>
       </div>
       <div className={styles.input_generated}>
-        <h4>Generated Link: {currentUrl ? currentUrl : null}</h4>
+        <h5>Generated Link: {currentUrl ? currentUrl : null}</h5>
       </div>
     </div>
   );

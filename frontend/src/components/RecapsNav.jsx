@@ -40,20 +40,19 @@ export default function RecapsNav() {
       <div className={styles.sidebar}>
         <div>
           <form className={styles.form} method="post" onSubmit={handleNewRecap}>
-            <label htmlFor="title">Title:</label>
             <input
               id="title"
               type="text"
+              placeholder="Recap Title"
               value={title}
               onChange={(e) => {
                 setTitle(e.target.value);
               }}
             />
-
-            <label htmlFor="description">Description:</label>
             <input
               id="description"
               type="text"
+              placeholder="Recap Description"
               value={description}
               onChange={(e) => {
                 setDescription(e.target.value);
@@ -71,7 +70,7 @@ export default function RecapsNav() {
               return (
                 <li className={styles.sidebar_item} key={recap.id}>
                   <NavLink to={`/recaps/${recap.id}`} className={styles.link}>
-                    <h3>{recap.title}</h3>
+                    <h4>{recap.title}</h4>
                     <p>{recap.description}</p>
                   </NavLink>
 

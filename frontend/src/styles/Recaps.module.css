@@ -1,5 +1,6 @@
 .meeting_main {
   width: 100%;
-  display: grid;
-  grid-template-columns: 15% 85%;
+  min-height: 100%;
+  display: flex;
+  flex-direction: 20% 80%;
 }

@@ -64,7 +64,7 @@ export default function RecapDetail() {
         <Transcript transcript={data.text} />
         <Summary summary={data.summary} />
       </div>
-      <div>
+      <div className={styles.button_recapify}>
         <button onClick={handleUserRecap}>Recapify!</button>
         {isLoading && <p>Loading...</p>}
       </div>
