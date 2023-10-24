@@ -1,7 +1,7 @@
 .wrapper {
   width: 100%;
   display: grid;
-  grid-template-rows: 2fr 8fr;
+  grid-template-rows: 5% 95%;
   align-items: center;
   border: 2px solid var(--border-color);
   border-radius: var(--border-radius);
@@ -14,9 +14,8 @@
   justify-content: center;
 }
 .summary_content {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  overflow: scroll;
+  grid-row: 2;
+  align-self: flex-start;
+  overflow: auto;
+  font-size: 2rem;
 }

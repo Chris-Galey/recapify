@@ -59,7 +59,7 @@ export default function RecapsNav() {
               }}
             />
 
-            <div>
+            <div className={styles.form_button}>
               <button type="submit">Add</button>
             </div>
           </form>
@@ -74,7 +74,7 @@ export default function RecapsNav() {
                     <p>{recap.description}</p>
                   </NavLink>
 
-                  <div>
+                  <div className={styles.sidebar_button}>
                     <button onClick={() => handleDeleteRecap(recap.id)}>
                       Delete
                     </button>

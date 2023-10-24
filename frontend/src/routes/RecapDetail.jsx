@@ -66,8 +66,8 @@ export default function RecapDetail() {
       </div>
       <div className={styles.button_recapify}>
         <button onClick={handleUserRecap}>Recapify!</button>
-        {isLoading && <p>Loading...</p>}
       </div>
+      <div className={styles.loading}>{isLoading && <p>Loading...</p>}</div>
     </div>
   );
 }

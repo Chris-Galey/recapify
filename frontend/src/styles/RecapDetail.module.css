@@ -1,12 +1,12 @@
 .wrapper {
   width: 80%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
+  height: 92vh;
+  display: grid;
+  grid-template-rows: 2fr 7fr 1fr;
   align-items: center;
   gap: 1rem;
   padding: 2rem;
-  overflow: scroll;
+  overflow: auto;
 }
 .input {
   width: 100%;
@@ -16,10 +16,14 @@
 }
 .content {
   width: 100%;
+  height: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1rem;
 }
 .button_recapify {
+  margin: 0 auto;
+}
+.loading {
   margin: 0 auto;
 }

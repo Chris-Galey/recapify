@@ -24,9 +24,7 @@ export default function Summary({ summary }) {
       <div className={styles.summary_header}>
         <h2>Summary</h2>
       </div>
-      <div className={styles.summary_content}>
-        <p>{text}</p>
-      </div>
+      <div className={styles.summary_content}>{text}</div>
     </div>
   );
 }

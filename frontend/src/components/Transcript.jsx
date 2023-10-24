@@ -24,9 +24,7 @@ export default function Transcript({ transcript }) {
       <div className={styles.transcript_header}>
         <h2>Transcript</h2>
       </div>
-      <div className={styles.transcript_content}>
-        <p>{text}</p>
-      </div>
+      <div className={styles.transcript_content}>{text}</div>
     </div>
   );
 }
