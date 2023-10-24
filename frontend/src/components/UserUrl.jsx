@@ -13,11 +13,12 @@ export default function UserFile({ userUrl, onUserUrlChange }) {
   };
   return (
     <div className={styles.wrapper}>
-      <label htmlFor="id">Enter URL:</label>
+      <label htmlFor="id">URL:</label>
       <input
         type="text"
         id="id"
         value={userUrl}
+        placeholder="Enter direct link to audio file."
         onPaste={handleUrlPaste}
         onChange={handleUrlChange}
       />

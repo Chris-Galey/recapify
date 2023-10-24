@@ -43,16 +43,16 @@ export default function UserUpload({ onUserUploadUrlChange }) {
         <div className={styles.upload_file}>
           <label htmlFor="file" className={styles.file_input_container}>
             Choose File
+            <input
+              id="file"
+              type="file"
+              name="audio"
+              accept=".mp3, .wav, .ogg"
+              onChange={handleFileChange}
+              ref={fileRef}
+              className={styles.file_input}
+            />
           </label>
-          <input
-            id="file"
-            type="file"
-            name="audio"
-            accept=".mp3, .wav, .ogg"
-            onChange={handleFileChange}
-            ref={fileRef}
-            className={styles.file_input}
-          />
 
           <button className={styles.upload_button} type="submit">
             Upload

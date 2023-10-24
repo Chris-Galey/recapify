@@ -6,9 +6,9 @@ export default function Customize({ customState, onCustomStateChange }) {
   const { recapId } = useParams();
   const initialCustomState = {
     summarization: true,
-    summary_type: "bullets",
+    summary_type: "bullets_verbose",
     summary_model: "informative",
-    entity_detection: false,
+    auto_highlights: false,
   };
   useEffect(() => {
     onCustomStateChange(initialCustomState);
@@ -49,7 +49,7 @@ export default function Customize({ customState, onCustomStateChange }) {
                 });
               }}
             >
-              <option value="bullets" id="bullets">
+              <option value="bullets_verbose" id="bullets">
                 bullets
               </option>
               <option value="paragraph" id="paragraph">
@@ -79,15 +79,15 @@ export default function Customize({ customState, onCustomStateChange }) {
           </div>
         </div>
         <div className={styles.form_keyword}>
-          <label htmlFor="keywords">Key Info:</label>
+          <label htmlFor="autoHighlights">Highlights:</label>
           <input
             type="checkbox"
-            id="keywords"
-            value={customState.entity_detection}
+            id="autoHighlights"
+            value={customState.auto_highlights}
             onChange={(e) => {
               onCustomStateChange({
                 ...customState,
-                entity_detection: e.target.checked,
+                auto_highlights: e.target.checked,
               });
             }}
           />

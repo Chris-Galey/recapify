@@ -47,9 +47,7 @@
   text-decoration: none;
   color: var(--text-color);
 }
-.link:hover {
-  transform: scale(1.1);
-}
+
 .link p {
   font-size: 1.2rem;
   color: #7a7a7a;

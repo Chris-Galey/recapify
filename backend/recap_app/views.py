@@ -139,12 +139,13 @@ class AssemblyGenerateTranscriptView(APIView):
     def post(self, request):
         audio_url = request.data['url']
         custom_state = request.data['customState']
+        print(custom_state)
         data = {
     "audio_url": audio_url,
     "summarization": custom_state['summarization'],
     "summary_model": custom_state['summary_model'],
      "summary_type": custom_state['summary_type'],
-     "entity_detection": custom_state['entity_detection'],
+     "auto_highlights": custom_state['auto_highlights'],
 }
     
         url = base_url + "/transcript"

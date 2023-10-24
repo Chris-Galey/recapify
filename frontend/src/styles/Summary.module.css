@@ -1,11 +1,10 @@
 .wrapper {
   width: 100%;
-  display: grid;
-  grid-template-rows: 5% 95%;
   align-items: center;
   border: 2px solid var(--border-color);
   border-radius: var(--border-radius);
   padding: 2rem;
+  gap: 2rem;
 }
 .summary_header {
   width: 100%;
@@ -16,6 +15,4 @@
 .summary_content {
   grid-row: 2;
   align-self: flex-start;
-  overflow: auto;
-  font-size: 2rem;
 }

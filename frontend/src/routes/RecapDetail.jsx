@@ -15,7 +15,7 @@ export default function RecapDetail() {
   const [data, setData] = useState([]);
   const [customState, setCustomState] = useState({});
   const [isLoading, setIsLoading] = useState(false);
-  console.log(url);
+  console.log(data, customState);
   useEffect(() => {
     setUrl("");
     setData([]);
@@ -61,7 +61,11 @@ export default function RecapDetail() {
         />
       </div>
       <div className={styles.content}>
-        <Transcript transcript={data.text} />
+        <Transcript
+          transcript={data.text}
+          confidence={data.confidence}
+          autoHighlights={data.auto_highlights_result}
+        />
         <Summary summary={data.summary} />
       </div>
       <div className={styles.button_recapify}>

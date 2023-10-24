@@ -39,7 +39,7 @@ export default function UserInput({ onUrlChange }) {
       </div>
       <div className={styles.content}>
         <div className={styles.select}>
-          <label htmlFor="input">Input Type:</label>
+          <label htmlFor="input">Type:</label>
           <select
             name="input"
             id="input"
