@@ -1,18 +1,16 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import TranscriptContent from "./TranscriptContent";
 import { getTranscript } from "../api/Api";
+import { useParams } from "react-router-dom";
 import styles from "../styles/Transcript.module.css";
 
 export default function Transcript({ transcript, confidence, autoHighlights }) {
+  console.log(transcript, confidence, autoHighlights);
+  const [text, setText] = useState("");
   const { recapId } = useParams();
-  const [text, setText] = useState([]);
-  const [conf, setconf] = useState();
-  console.log(conf, autoHighlights, transcript);
   useEffect(() => {
-    if (transcript) {
-      setText(transcript);
-      setconf(confidence);
-    } else {
+    setText("");
+    if (!transcript) {
       const fetchTranscript = async () => {
         const data = await getTranscript(recapId);
         setText(data.raw_transcript || "No Transcript");
@@ -24,10 +22,19 @@ export default function Transcript({ transcript, confidence, autoHighlights }) {
   return (
     <div className={styles.wrapper}>
       <div className={styles.transcript_header}>
-        <h2>Transcript</h2>
+        <h3>Transcript</h3>
       </div>
-      <p>Confidence: {conf ? conf.toFixed(2) : null}</p>
-      <div className={styles.transcript_content}>{text}</div>
+      {(transcript && autoHighlights.results.length > 0 && (
+        <TranscriptContent
+          transcript={transcript}
+          confidence={confidence}
+          autoHighlights={autoHighlights}
+        />
+      )) || (
+        <div className={styles.no_transcript}>
+          <p>{text}</p>
+        </div>
+      )}
     </div>
   );
 }

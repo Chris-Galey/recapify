@@ -44,6 +44,7 @@ export default function Signup() {
           setPassword(e.target.value);
         }}
       />
+      <div></div>
       <button type="submit">Sign Up</button>
       <Link href="/dashboard/login" className={styles.link}>
         {"Already have an account? Login"}

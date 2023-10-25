@@ -2,7 +2,7 @@
   width: 100%;
 
   align-items: center;
-  border: 2px solid var(--border-color);
+  border: 1px solid var(--border-color);
   border-radius: var(--border-radius);
   padding: 2rem;
   gap: 2rem;
@@ -15,6 +15,7 @@
   justify-content: center;
 }
 .transcript_content {
+  background-color: var(--bg-color-secondary);
   grid-row: 2;
   align-self: flex-start;
 }

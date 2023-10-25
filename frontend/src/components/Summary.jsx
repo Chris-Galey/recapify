@@ -22,9 +22,11 @@ export default function Summary({ summary }) {
   return (
     <div className={styles.wrapper}>
       <div className={styles.summary_header}>
-        <h2>Summary</h2>
+        <h3>Summary</h3>
       </div>
-      <div className={styles.summary_content}>{text}</div>
+      <div className={styles.no_summary}>
+        <p>{text}</p>
+      </div>
     </div>
   );
 }

@@ -1,54 +1,41 @@
 .sidebar {
-  width: 20%;
-  height: 92vh;
   display: flex;
   flex-direction: column;
   padding: 1rem;
   gap: 5rem;
-  border-right: 1.5px solid var(--border-color);
-  background-color: var(--bg-color);
+  border-right: 1px solid var(--border-color);
+  background-color: var(--bg-color-secondary);
   overflow: scroll;
 }
 .form {
-  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
 }
 .form_button {
-  width: 100%;
   display: flex;
   justify-content: center;
 }
 
-.sidebar_nav {
-  width: 100%;
-}
 .sidebard_list {
   display: flex;
   flex-direction: column;
 }
 .sidebar_item {
-  width: 100%;
   display: flex;
   flex-direction: row;
+  align-items: center;
   justify-content: space-between;
   border-bottom: 1.5px solid var(--border-color);
   padding: 0.5rem 0;
 }
-.sidebar_button {
-  width: 20%;
-  display: flex;
-  justify-content: flex-end;
-}
+
 .link {
-  width: 90%;
   overflow: hidden;
   text-decoration: none;
   color: var(--text-color);
 }
 
 .link p {
-  font-size: 1.2rem;
   color: #7a7a7a;
 }

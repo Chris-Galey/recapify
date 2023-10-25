@@ -1,13 +1,15 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap");
 :root {
-  --bg-color: #fff;
-  --bg-color-secondary: rgb(217, 217, 227);
-  --border-color: #ccc;
-  --nav-bg-color: rgb(32, 33, 35);
-  --nav-border-color: hsla(0, 0%, 100%, 0.2);
-  --text-color: #374151;
-  --button-color: #19c37d;
-  --border-radius: 2rem;
+  --bg-color: #050506;
+  --bg-color-secondary: #16181a;
+  --border-color: #262827;
+  --text-color: #fff;
+  --text-color-secondary: #cac5cd;
+
+  --border-radius: 1rem;
+  --tertiary-color: #eb942b;
+  --tertiary-color-medium: rgba(235, 148, 43, 0.3);
+  --tertiary-color-light: rgba(235, 148, 43, 0.15);
 }
 html {
   font-size: 62.5%;
@@ -24,14 +26,12 @@ body {
   box-sizing: border-box;
   margin: 0 auto;
   width: 100%;
-  height: 90vh;
-  overflow: hidden;
   background: var(--bg-color);
   font-family: "Roboto", sans-serif;
   font-size: 1.5rem;
   font-weight: 400;
   line-height: 1.75;
-  color: var(--text-color);
+  color: var(--text-color-secondary);
 }
 
 h1,
@@ -42,6 +42,7 @@ h5 {
   font-family: "Roboto", sans-serif;
   font-weight: 400;
   line-height: 1.3;
+  color: var(--text-color);
 }
 
 p {
@@ -78,43 +79,44 @@ li {
 
 input {
   padding: 10px;
-  border: 1px solid var(--border-color);
-  border-radius: 5px;
+  border: 1px solid var(--text-color);
+  border-radius: var(--border-radius);
   font-size: 1.5rem;
 }
 
 /* Select Styles */
 select {
   padding: 8px;
-  border: 1px solid var(--border-color);
-  border-radius: 5px;
+  border: 1px solid var(--text-color);
+  color: var(--text-color);
+
+  border-radius: var(--border-radius);
   font-size: 1.5rem;
   background-color: transparent;
 }
-
+option {
+  color: var(--text-color);
+  background-color: #050506;
+}
 /* Label Styles */
 label {
   font-size: 1.5rem;
   font-weight: bold;
-  color: #333;
+  color: var(--text-color);
   display: block;
 }
 button {
+  color: var(--tertiary-color);
   display: inline-block;
   padding: 10px;
-  background-color: var(--button-color);
-  border: none;
-  border-radius: 5px;
+  background-color: rgba(235, 148, 43, 0.15);
+  border: 1px solid rgba(235, 148, 43, 0.3);
+  border-radius: var(--border-radius);
   font-size: 1.7rem;
   cursor: pointer;
-  transition: background-color 0.3s ease;
   text-align: center;
   text-decoration: none;
   white-space: nowrap;
-}
-
-button:hover {
-  color: var(--bg-color);
 }
 
 ::-webkit-scrollbar {
@@ -127,4 +129,7 @@ button:hover {
 
 ::-webkit-scrollbar-track {
   display: none; /* Hide scrollbar track for Chrome, Safari, and Opera */
+}
+.highlighted-word {
+  background-color: rgba(235, 148, 43, 0.15);
 }

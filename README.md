@@ -10,7 +10,7 @@ Meeting Summaries: Transform lengthy meetings into concise, actionable summaries
 
 Effortless Storage: Store all your meeting transcripts securely in one place. Easily access past meetings whenever you need to reference key information.
 
-Customization: Tailor your summaries to fit your unique needs. Choose the level of detail, keywords, and themes you want to emphasize.
+Customization: Tailor your summaries to fit your unique needs. Choose the type of summary, highlights, and models you want to emphasize.
 
 Actionable Insights: Identify action items, follow-ups, and decisions made during your meetings, turning insights into actions.
 

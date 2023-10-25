@@ -15,5 +15,5 @@
   font-weight: 500;
   line-height: 1.3;
   font-size: 7.478rem;
-  color: #000000;
+  color: var(--text-color);
 }

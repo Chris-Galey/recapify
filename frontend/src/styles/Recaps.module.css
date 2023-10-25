@@ -1,5 +1,5 @@
 .meeting_main {
-  max-width: 100%;
-  display: flex;
-  flex-direction: 20% 80%;
+  height: 92vh;
+  display: grid;
+  grid-template-columns: 1fr 4fr;
 }
