@@ -9,7 +9,7 @@ export default function Transcript({ transcript, confidence, autoHighlights }) {
   const [text, setText] = useState("");
   const { recapId } = useParams();
   useEffect(() => {
-    setText("");
+    setText(transcript);
     if (!transcript) {
       const fetchTranscript = async () => {
         const data = await getTranscript(recapId);
@@ -24,13 +24,16 @@ export default function Transcript({ transcript, confidence, autoHighlights }) {
       <div className={styles.transcript_header}>
         <h3>Transcript</h3>
       </div>
-      {(transcript && autoHighlights.results.length > 0 && (
-        <TranscriptContent
-          transcript={transcript}
-          confidence={confidence}
-          autoHighlights={autoHighlights}
-        />
-      )) || (
+      {(transcript &&
+        autoHighlights &&
+        autoHighlights.results &&
+        autoHighlights.results.length > 0 && (
+          <TranscriptContent
+            transcript={transcript}
+            confidence={confidence}
+            autoHighlights={autoHighlights}
+          />
+        )) || (
         <div className={styles.no_transcript}>
           <p>{text}</p>
         </div>

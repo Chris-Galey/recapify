@@ -16,6 +16,7 @@
 }
 .transcript_content {
   background-color: var(--bg-color-secondary);
+  color: var(--text-color);
   grid-row: 2;
   align-self: flex-start;
 }

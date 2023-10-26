@@ -6,49 +6,27 @@ export default function TranscriptContent({
   const highlightPhrases = autoHighlights.results.map((highlight) => {
     return highlight.text || "";
   });
-  const words = transcript.split(" ");
+
+  const highlightedTranscript = () => {
+    let transcriptCopy = transcript;
+
+    highlightPhrases.forEach((phrase) => {
+      const regex = new RegExp(`\\b${phrase}\\b`, "g");
+      transcriptCopy = transcriptCopy.replace(
+        regex,
+        (match) => `<span class="highlighted">${match}</span>`
+      );
+    });
+
+    return { __html: transcriptCopy };
+  };
 
   return (
     <div className="transcript">
       <div>
-        <p>{confidence}</p>
+        <p>Confidence: {confidence.toFixed(2) * 100 + "%"}</p>
       </div>
-      {words.map((word, index) => {
-        const matchedPhraseIndex = highlightPhrases.findIndex(
-          (phrase) => phrase.split(" ")[0] === word
-        );
-
-        if (matchedPhraseIndex !== -1) {
-          const matchedPhrase = highlightPhrases[matchedPhraseIndex];
-          const phraseWords = matchedPhrase.split(" ");
-          let isHighlighted = true;
-
-          for (let i = 1; i < phraseWords.length; i++) {
-            if (words[index + i] !== phraseWords[i]) {
-              isHighlighted = false;
-              break;
-            }
-          }
-
-          if (isHighlighted) {
-            return (
-              <span key={index} className="highlighted">
-                {phraseWords.map((phraseWord, i) => (
-                  <span key={i} className="highlighted-word">
-                    {phraseWord}
-                  </span>
-                ))}
-              </span>
-            );
-          }
-        }
-
-        return (
-          <span key={index} className="highlighted">
-            {word}{" "}
-          </span>
-        );
-      })}
+      <div dangerouslySetInnerHTML={highlightedTranscript()} />
     </div>
   );
 }
