@@ -15,7 +15,6 @@ export default function RootHeader() {
     localStorage.removeItem("token");
     navigate("/dashboard/login");
   };
-  console.log(sharedState);
   return (
     <header className={styles.root_header}>
       <h2 className={styles.logo}>Recapify</h2>

@@ -150,7 +150,6 @@ export const assemblyGenerateUrl = async (file) => {
     body: formData,
   });
   const res = await data.json();
-  console.log(res);
   return res;
 };
 

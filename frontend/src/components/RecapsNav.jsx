@@ -9,8 +9,6 @@ export default function RecapsNav() {
   const [title, setTitle] = useState();
   const [description, setDescription] = useState();
 
-  console.log(recaps);
-
   useEffect(() => {
     const fetchRecaps = async () => {
       const data = await getRecaps();

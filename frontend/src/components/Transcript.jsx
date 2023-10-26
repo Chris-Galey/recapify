@@ -5,7 +5,6 @@ import { useParams } from "react-router-dom";
 import styles from "../styles/Transcript.module.css";
 
 export default function Transcript({ transcript, confidence, autoHighlights }) {
-  console.log(transcript, confidence, autoHighlights);
   const [text, setText] = useState("");
   const { recapId } = useParams();
   useEffect(() => {

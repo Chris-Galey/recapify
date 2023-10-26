@@ -13,8 +13,6 @@ export default function Signup() {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     const data = await signup(username, password);
-    console.log(data.status);
-    console.log(`${data.username} has been created!`);
     setUsername("");
     setPassword("");
     sharedState.setSignedup(true);
