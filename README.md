@@ -1,7 +1,5 @@
 # App Name: Recapify
 
-## Description
-
 Recapify is your ultimate meeting companion, designed to streamline and simplify the way you manage and digest your important discussions. With Recapify, lengthy meetings and complex conversations become effortlessly manageable.
 
 ## Key Features
