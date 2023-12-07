@@ -2,6 +2,10 @@
 
 Recapify is your ultimate meeting companion, designed to streamline and simplify the way you manage and digest your important discussions. With Recapify, lengthy meetings and complex conversations become effortlessly manageable.
 
+
+https://github.com/Chris-Galey/recapify/assets/114961125/c408131a-86fa-42dd-9d0a-c24d914e974a
+
+
 ## Key Features
 
 Meeting Summaries: Transform lengthy meetings into concise, actionable summaries. Recapify's intelligent algorithms capture the essence of your discussions, ensuring you never miss a crucial point.
